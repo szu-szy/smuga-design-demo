@@ -1,7 +1,7 @@
 """Szablony stron demo Smuga Design v3. Dane w build_head.py. Uruchom: python3 build.py"""
 from build_head import *  # noqa: F401,F403 - dane projektów, zdjęć i kontaktu
 
-V = "9"
+V = "10"
 STREAK_PATH = "M12 60C14 44 30 38 54 32C76 26 86 20 88 4H108C108 24 92 36 64 42C42 47 32 50 32 60Z"
 DRAW_PATH = "M22 58C24 46 36 40 58 35C80 30 96 22 98 6"
 SERVICES = [
@@ -224,7 +224,7 @@ home = f"""<section class="hero" aria-labelledby="hero-h" style="--n:{len(SLIDES
 
 <section class="sec"><div class="wrap">
   <div class="sec-h"><div><span class="lbl w muted">Realizacje</span><h2 class="d-l rv">Wybrane projekty</h2></div><a class="lnk" href="realizacje.html">Wszystkie realizacje</a></div>
-  {work_index()}
+  <div class="ash stag">{"".join(f'<a class="mask" href="projekt-{p["slug"]}.html">{pic(p["card"], "r-3-4", "(max-width: 1080px) 50vw, 25vw")}<span class="cap"><b>{escape(p["title"])}</b><span>{escape(p["lok"] or p["typ"])}</span></span></a>' for p in PROJECTS)}</div>
 </div></section>
 
 <section class="feat wtop pink"><div class="wrap g12">
@@ -261,16 +261,26 @@ page("index.html", "Smuga Design | projektowanie wnętrz Białystok", "Pracownia
 
 
 # REALIZACJE
-def wr_facts(p):
-    return "".join(f"<div><dt>{k}</dt><dd>{escape(v)}</dd></div>" for k, v in (("Typ", p["typ"]), ("Miasto", p["lok"]), ("Rok", p["rok"])) if v)
+ROW_IMGS = {"mnc-concept": ["mnc-sala", "mnc-lada", "mnc-bar"], "mieszkanie-warszawa": ["viz-apartament-wwa", "wwa-zabudowa", "wwa-grafiki"], "dom-001": ["viz-dom-001", "dom-zabudowa", "dom-okno"], "showroom-spod-igly-i-nitki": ["viz-showroom", "show-regal", "show-fotel"]}
 
 
-works = "".join(f'''<article class="wr"><a class="wr-img mask" href="projekt-{p["slug"]}.html" tabindex="-1" aria-hidden="true">{pic(p["card"], "r-4-3" if i % 2 else "r-5-4", "(max-width: 1080px) 100vw, 58vw")}</a><div class="wr-txt stag"><span class="num">{i + 1:02d}</span><h2 class="d-l"><a href="projekt-{p["slug"]}.html">{escape(p["title"])}</a></h2><p class="lead muted">{p["lead"]}</p><dl class="wr-facts">{wr_facts(p)}</dl><a class="lnk" href="projekt-{p["slug"]}.html">Zobacz realizację</a></div></article>''' for i, p in enumerate(PROJECTS))
+def kw_row(p):
+    pics = ""
+    for n in ROW_IMGS[p["slug"]]:
+        w, h = IMG[n][1]
+        r = round(w / h, 3)
+        ph = pic(n, "", "(max-width: 860px) 70vw, 30vw").replace('class="ph "', f'class="ph" style="aspect-ratio:{w}/{h}"')
+        pics += f'<a href="projekt-{p["slug"]}.html" tabindex="-1" aria-hidden="true" style="flex:{r} 1 0">{ph}</a>'
+    return f'''<article class="kw-row"><div class="kw-name"><a href="projekt-{p["slug"]}.html">{escape(p["title"])}</a>{"".join(f"<span>{escape(x)}</span>" for x in (p["typ"], p["lok"], p["rok"]) if x)}</div><div class="kw-pics mask">{pics}</div></article>'''
+
+
+works = "".join(kw_row(p) for p in PROJECTS)
+
 real = f"""<div class="ph-head"><div class="wrap">
   <p class="crumbs"><a href="index.html">Start</a><span>/</span><span>Realizacje</span></p>
   <div class="g12"><h1 class="d-xl">Realizacje</h1><p class="lead muted">Domy, mieszkania i wnętrza komercyjne. Każdy projekt z opisem i pełną galerią.</p></div>
 </div></div>
-<section><div class="wrap wr-list">{works}</div></section>
+<section><div class="wrap kw">{works}</div></section>
 {cta()}"""
 page("realizacje.html", "Realizacje | Smuga Design", "Realizacje pracowni Smuga Design: domy, mieszkania, wnętrza komercyjne.", real, "realizacje.html")
 

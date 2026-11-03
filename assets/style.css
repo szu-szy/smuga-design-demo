@@ -683,3 +683,37 @@ a:hover .ph img, button:hover .ph img { transform: scale(1.03); }
   .nx-more { padding-bottom: 64px; }
 }
 .r-4-3 { aspect-ratio: 4 / 3; }
+
+/* ===== v6: realizacje wg prawdziwych pracowni (Studio Ashby, Kelly Wearstler) ===== */
+/* strona główna: równy rząd wysokich zdjęć, pod spodem tylko nazwa */
+.ash { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 4px; }
+.ash a { text-decoration: none; display: grid; gap: 12px; align-content: start; }
+.ash .cap { display: grid; gap: 0; padding: 0 4px; }
+.ash .cap b { font-weight: 500; }
+.ash .cap span { color: var(--ink-2); }
+.ash a:hover .cap b { text-decoration: underline; text-underline-offset: 4px; }
+
+/* strona Realizacje: projekt = rząd jego zdjęć, nazwa z boku */
+.kw { padding-bottom: 96px; }
+.kw-row { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 24px; padding: 32px 0; border-top: 1px solid var(--line); align-items: start; }
+.kw-row:last-child { border-bottom: 1px solid var(--line); }
+.kw-name { grid-column: 1 / 4; display: grid; gap: 4px; position: sticky; top: 112px; }
+.kw-name a { text-decoration: none; font-family: var(--display); font-size: 24px; line-height: 32px; }
+.kw-name a:hover { text-decoration: underline; text-underline-offset: 4px; }
+.kw-name span { color: var(--ink-2); }
+.kw-pics { grid-column: 4 / -1; display: flex; gap: 4px; }
+.kw-pics a { display: block; min-width: 0; }
+.kw-pics .ph { height: 100%; }
+@media (max-width: 1080px) {
+  .ash { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: 24px; }
+  .kw-name { grid-column: 1 / -1; position: static; }
+  .kw-pics { grid-column: 1 / -1; }
+}
+@media (max-width: 860px) {
+  .kw-row { padding: 24px 0; gap: 16px; }
+  .kw-pics { overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; }
+  .kw-pics::-webkit-scrollbar { display: none; }
+  .kw-pics a { flex: 0 0 auto !important; height: 280px; scroll-snap-align: start; }
+  .kw-pics .ph { width: auto; height: 280px; }
+  .kw-pics .ph img { width: auto; height: 280px; max-width: none; }
+}
