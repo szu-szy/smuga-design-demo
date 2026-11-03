@@ -54,8 +54,19 @@ const setMenu = (open) => {
   burger.querySelector('span').textContent = open ? 'Zamknij' : 'Menu';
   document.body.style.overflow = open ? 'hidden' : '';
 };
-burger.addEventListener('click', () => setMenu(!drawer.classList.contains('is-open')));
-document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && drawer.classList.contains('is-open')) { setMenu(false); burger.focus(); } });
+burger.addEventListener('click', () => { setMenu(true); setTimeout(() => drawer.querySelector('.d-close').focus(), 60); });
+drawer.querySelector('.d-close').addEventListener('click', () => { setMenu(false); burger.focus(); });
+drawer.querySelectorAll('[data-modal]').forEach((a) => a.addEventListener('click', () => setMenu(false)));
+document.addEventListener('keydown', (e) => {
+  if (!drawer.classList.contains('is-open')) return;
+  if (e.key === 'Escape') { setMenu(false); burger.focus(); }
+  if (e.key === 'Tab') { // fokus zostaje w szufladzie
+    const f = [...drawer.querySelectorAll('a, button')];
+    const i = f.indexOf(document.activeElement);
+    e.preventDefault();
+    f[(i + (e.shiftKey ? -1 : 1) + f.length) % f.length].focus();
+  }
+});
 
 // hero: przenikające zdjęcia z paskiem postępu, pauza po najechaniu i poza ekranem
 const hero = document.querySelector('.hero');

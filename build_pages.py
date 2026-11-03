@@ -1,7 +1,7 @@
 """Szablony stron demo Smuga Design v3. Dane w build_head.py. Uruchom: python3 build.py"""
 from build_head import *  # noqa: F401,F403 - dane projektów, zdjęć i kontaktu
 
-V = "5"
+V = "7"
 STREAK_PATH = "M12 60C14 44 30 38 54 32C76 26 86 20 88 4H108C108 24 92 36 64 42C42 47 32 50 32 60Z"
 DRAW_PATH = "M22 58C24 46 36 40 58 35C80 30 96 22 98 6"
 SERVICES = [
@@ -68,7 +68,7 @@ def header(current):
       <a class="tel" href="tel:{PHONE_HREF}" aria-label="Zadzwoń {PHONE}">{ICO["tel"]}<span>604 762 946</span></a>
       <a class="cta-s" href="kontakt.html" data-modal>Umów rozmowę</a>
     </nav>
-    <button class="burger" type="button" aria-expanded="false" aria-controls="drawer"><span>Menu</span><i aria-hidden="true"></i></button>
+    <button class="burger" type="button" aria-expanded="false" aria-controls="drawer"><span>Menu</span><i aria-hidden="true"></i><b class="x" aria-hidden="true"></b></button>
   </div>
   <div class="mm" id="mm">
     <div class="wrap">
@@ -78,7 +78,7 @@ def header(current):
     </div>
   </div>
 </header>
-<div class="drawer" id="drawer"><a href="realizacje.html">Realizacje</a><a href="oferta.html">Oferta</a><div class="sub">{sub}</div><a href="o-mnie.html">O mnie</a><a href="kontakt.html">Kontakt</a><div class="small"><a href="mailto:{EMAIL}">{EMAIL}</a><a href="tel:{PHONE_HREF}">{PHONE}</a></div></div>"""
+<div class="drawer" id="drawer" role="dialog" aria-modal="true" aria-label="Menu"><div class="d-top"><a class="logo" href="index.html">{mark()}SMUGA</a><button class="d-close" type="button" aria-label="Zamknij menu"><span></span></button></div><a href="realizacje.html">Realizacje</a><a href="oferta.html">Oferta</a><div class="sub">{sub}</div><a href="o-mnie.html">O mnie</a><a href="kontakt.html">Kontakt</a><div class="d-cta"><a class="btn" href="kontakt.html" data-modal>Umów rozmowę</a></div>{WAVE}<div class="small"><a href="tel:{PHONE_HREF}">{ICO["tel"]}{PHONE}</a><a href="mailto:{EMAIL}">{ICO["mail"]}{EMAIL}</a></div></div>"""
 
 
 def footer():
@@ -109,9 +109,9 @@ def modal():
     <div class="r">
       <p class="lead">Zostaw kontakt, oddzwonię i umówimy pierwszą rozmowę.</p>
       <form class="form" novalidate>
-        <label>Imię<input name="imie" autocomplete="given-name" required></label>
-        <label>Telefon<input type="tel" name="tel" autocomplete="tel" required></label>
-        <fieldset class="full"><legend>Rodzaj wnętrza</legend><div class="pills">{pills}</div></fieldset>
+        <label><span>Imię <span class="req" aria-hidden="true">*</span></span><input name="imie" autocomplete="given-name" required></label>
+        <label><span>Telefon <span class="req" aria-hidden="true">*</span></span><input type="tel" name="tel" autocomplete="tel" required></label>
+        <fieldset class="full"><legend><span>Rodzaj wnętrza <span class="req" aria-hidden="true">*</span></span></legend><div class="pills">{pills}</div></fieldset>
         <label class="full">Krótko o wnętrzu<textarea name="wiadomosc" placeholder="np. mieszkanie 60 m², chcę zmienić kuchnię i salon"></textarea></label>
         <label class="consent full"><input type="checkbox" required> Zgadzam się na kontakt w sprawie zapytania.</label>
         <div class="send full"><button class="btn" type="submit">Wyślij</button></div>
@@ -171,9 +171,9 @@ def cta():
 </section>"""
 
 
-def tile(p, ratio="r-4-5", sizes="(max-width: 860px) 50vw, 25vw"):
+def tile(p, ratio="r-4-5", sizes="(max-width: 860px) 50vw, 25vw", h="h3"):
     return (f'<a class="tile mask" href="projekt-{p["slug"]}.html">{pic(p["card"], ratio, sizes)}'
-            f'<div class="row"><h3>{escape(p["title"])}</h3><span class="ar" aria-hidden="true">&#8594;</span></div>'
+            f'<div class="row"><{h}>{escape(p["title"])}</{h}><span class="ar" aria-hidden="true">&#8594;</span></div>'
             f'<p class="lbl muted">{escape(place(p))}</p></a>')
 
 
@@ -244,7 +244,7 @@ page("index.html", "Smuga Design · projektowanie wnętrz Białystok", "Pracowni
 
 
 # REALIZACJE
-works = "".join(tile(p, "r-5-4", "(max-width: 860px) 100vw, 50vw") for p in PROJECTS)
+works = "".join(tile(p, "r-5-4", "(max-width: 860px) 100vw, 50vw", "h2") for p in PROJECTS)
 real = f"""<div class="ph-head"><div class="wrap">
   <p class="crumbs"><a href="index.html">Start</a><span>/</span><span>Realizacje</span></p>
   <div class="g12"><h1 class="d-xl">Realizacje</h1><p class="lead muted">Domy, mieszkania i wnętrza komercyjne. Każdy projekt z opisem i pełną galerią.</p></div>
@@ -382,11 +382,11 @@ kontakt = f"""<section class="kt">
     <h2 class="d-l">Opisz swoje wnętrze</h2>
     <p class="lead muted">Im więcej szczegółów, tym lepiej przygotuję się do pierwszej rozmowy.</p>
     <form class="form" novalidate>
-      <label>Imię<input name="imie" autocomplete="given-name" required></label>
-      <label>E-mail<input type="email" name="email" autocomplete="email" required></label>
+      <label><span>Imię <span class="req" aria-hidden="true">*</span></span><input name="imie" autocomplete="given-name" required></label>
+      <label><span>E-mail <span class="req" aria-hidden="true">*</span></span><input type="email" name="email" autocomplete="email" required></label>
       <label>Telefon<input type="tel" name="tel" autocomplete="tel"></label>
       <label>Lokalizacja<input name="miasto" placeholder="np. Białystok"></label>
-      <fieldset class="full"><legend>Rodzaj wnętrza</legend><div class="pills">{pills("typ", ["Mieszkanie", "Dom", "Wnętrze komercyjne", "Inne"], True)}</div></fieldset>
+      <fieldset class="full"><legend><span>Rodzaj wnętrza <span class="req" aria-hidden="true">*</span></span></legend><div class="pills">{pills("typ", ["Mieszkanie", "Dom", "Wnętrze komercyjne", "Inne"], True)}</div></fieldset>
       <fieldset class="full"><legend>Zakres</legend><div class="pills">{pills("zakres", [n for _k, n, _d, _i in SERVICES] + ["Jeszcze nie wiem"])}</div></fieldset>
       <label>Metraż (m²)<input name="metraz" inputmode="numeric" placeholder="np. 65"></label>
       <fieldset><legend>Kiedy chcesz zacząć</legend><div class="pills">{pills("termin", ["Teraz", "Do 3 mies.", "Później"])}</div></fieldset>
