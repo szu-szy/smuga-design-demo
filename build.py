@@ -127,7 +127,7 @@ def page(fname, title, desc, body, current=""):
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@112,600&family=Hanken+Grotesk:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/style.css">
+<link rel="stylesheet" href="assets/style.css?v=2">
 </head>
 <body>
 <a class="skip" href="#main">Przejdź do treści</a>
@@ -151,7 +151,7 @@ def page(fname, title, desc, body, current=""):
     <div class="bottom"><span>© 2026 Smuga Design · Białystok</span><span>{"  ·  ".join(f'<a href="{h}">{t}</a>' for h, t in NAV)}</span><span>Demo projektu strony · Impact Agencja</span></div>
   </div>
 </footer>
-<script src="assets/app.js" defer></script>
+<script src="assets/app.js?v=2" defer></script>
 </body>
 </html>
 """
