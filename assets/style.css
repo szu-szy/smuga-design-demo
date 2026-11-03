@@ -1,12 +1,13 @@
 /* Smuga Design - demo strony. Siatka 4 px, kolory w hex, bez ułamków. */
 :root {
-  --bg: #F6F1EB;
+  /* paleta ze stopki Smuga Design: biel, brąz, róż smugi */
+  --bg: #FFFFFF;
   --paper: #FFFFFF;
-  --ink: #1E1A17;
-  --brown: #5C4841;
-  --line: #D8CDC2;
-  --pink: #FEC8C8;
-  --blue: #CAD7E7;
+  --ink: #5C4741;
+  --brown: #705D58;
+  --line: #E7E2E1;
+  --pink: #FFC7C8;
+  --soft: #F7F3F2;
   --wide: "Archivo", "Hanken Grotesk", sans-serif;
   --font: "Hanken Grotesk", system-ui, sans-serif;
   --max: 1360px;
@@ -35,15 +36,15 @@ p { text-wrap: pretty; hyphens: none; }
 .t-lead { font-size: 20px; line-height: 32px; }
 .muted { color: var(--brown); }
 .tag { display: inline-block; border: 1px solid var(--ink); padding: 4px 8px; font-size: 12px; line-height: 16px; letter-spacing: 2px; text-transform: uppercase; font-weight: 500; }
-.tag.viz { background: var(--blue); border-color: var(--blue); }
+.tag.viz { background: var(--paper); border-color: var(--ink); }
 .tag.real { background: var(--pink); border-color: var(--pink); }
 
 /* nagłówek */
 .hdr { position: sticky; top: 0; z-index: 20; background: var(--bg); border-bottom: 1px solid var(--line); transition: box-shadow 240ms var(--ease); }
-.hdr.is-scrolled { box-shadow: 0 8px 24px #1E1A170F; }
+.hdr.is-scrolled { box-shadow: 0 8px 24px #5C47410F; }
 .hdr .wrap { display: flex; align-items: center; justify-content: space-between; height: 80px; transition: height 240ms var(--ease); }
 .hdr.is-scrolled .wrap { height: 64px; }
-.logo { font-family: var(--wide); font-stretch: 125%; font-weight: 600; font-size: 24px; line-height: 24px; letter-spacing: 2px; text-decoration: none; display: flex; align-items: baseline; gap: 8px; }
+.logo { font-family: var(--wide); font-stretch: 112%; font-weight: 600; font-size: 24px; line-height: 24px; letter-spacing: 2px; text-decoration: none; display: flex; align-items: baseline; gap: 8px; }
 .logo small { font-family: var(--font); font-stretch: 100%; font-size: 12px; letter-spacing: 2px; font-weight: 500; text-transform: uppercase; color: var(--brown); }
 .nav { display: flex; gap: 32px; align-items: center; }
 .nav a { text-decoration: none; font-size: 16px; line-height: 24px; padding: 4px 0; border-bottom: 1px solid transparent; transition: border-color 240ms var(--ease); }
@@ -73,7 +74,7 @@ p { text-wrap: pretty; hyphens: none; }
 .hero-grid { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 4fr) minmax(0, 3fr); gap: 24px; align-items: end; }
 .hero-grid a { text-decoration: none; display: block; }
 .hero-grid figcaption { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px 16px; margin-top: 12px; }
-.ph { overflow: hidden; background: var(--line); }
+.ph { overflow: hidden; background: var(--soft); }
 .ph img { width: 100%; height: 100%; object-fit: cover; transition: transform 600ms var(--ease); }
 a:hover .ph img { transform: scale(1.03); }
 .r-4-5 { aspect-ratio: 4 / 5; } .r-5-4 { aspect-ratio: 5 / 4; } .r-3-2 { aspect-ratio: 3 / 2; } .r-1-1 { aspect-ratio: 1 / 1; } .r-3-4 { aspect-ratio: 3 / 4; }
@@ -118,7 +119,8 @@ a:hover .ph img { transform: scale(1.03); }
 .steps li p { color: var(--brown); }
 
 /* pas dla biznesu */
-.band { background: var(--blue); }
+.band { background: var(--ink); color: var(--paper); }
+.band .more { border-color: var(--paper); }
 .band .wrap { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 24px; align-items: center; padding-top: 96px; padding-bottom: 96px; }
 .band .txt { grid-column: 1 / 6; }
 .band .txt .t-h2 { margin: 16px 0 24px; }
@@ -134,15 +136,21 @@ a:hover .ph img { transform: scale(1.03); }
 .contact .lines a:hover { color: var(--brown); }
 
 /* stopka */
-.ftr { background: var(--brown); color: var(--paper); padding: 64px 0 40px; }
+.ftr { background: var(--bg); color: var(--ink); padding: 96px 0 40px; border-top: 1px solid var(--line); }
 .ftr .wrap { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 24px; }
-.ftr .logo { grid-column: 1 / 5; color: var(--paper); }
-.ftr .logo small { color: var(--paper); }
-.ftr nav { grid-column: 5 / 9; display: grid; gap: 8px; align-content: start; }
-.ftr .data { grid-column: 9 / -1; display: grid; gap: 8px; align-content: start; }
+.ftr .streak { grid-column: 1 / 4; width: 96px; }
+.ftr .col { grid-column: span 3; display: grid; gap: 4px; align-content: start; }
+.ftr .col b { font-weight: 500; }
 .ftr a { text-decoration: none; }
 .ftr a:hover { text-decoration: underline; text-underline-offset: 4px; }
-.ftr .bottom { grid-column: 1 / -1; display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; margin-top: 48px; padding-top: 24px; border-top: 1px solid #8A746C; font-size: 12px; line-height: 16px; letter-spacing: 1px; }
+.ftr .mark { grid-column: 1 / -1; font-family: var(--wide); font-stretch: 112%; font-weight: 600; font-size: 144px; line-height: 128px; letter-spacing: -4px; margin-top: 64px; white-space: nowrap; }
+.ftr .bottom { grid-column: 1 / -1; display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; margin-top: 32px; padding-top: 24px; border-top: 1px solid var(--line); font-size: 12px; line-height: 16px; letter-spacing: 1px; color: var(--brown); }
+
+/* smuga: znak z identyfikacji, jedyny ozdobnik */
+.streak { display: block; fill: var(--pink); height: auto; }
+.hero-top h1 { position: relative; isolation: isolate; }
+.hero-top h1 .streak { display: inline-block; width: 128px; margin-left: 16px; vertical-align: top; }
+.logo .streak { width: 28px; margin-right: 4px; align-self: center; }
 
 /* lista projektów */
 .page-head { padding: 64px 0 48px; display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 24px; align-items: end; }
@@ -157,7 +165,7 @@ a:hover .ph img { transform: scale(1.03); }
 .switch a sup { font-size: 12px; line-height: 16px; color: var(--brown); }
 .switch a[aria-current="page"] { border-bottom-color: var(--ink); }
 .switch a:hover { border-bottom-color: var(--ink); }
-.soon { background: var(--paper); border: 1px solid var(--line); display: flex; flex-direction: column; justify-content: space-between; padding: 24px; aspect-ratio: 4 / 5; }
+.soon { background: var(--soft); border: 0; display: flex; flex-direction: column; justify-content: space-between; padding: 24px; aspect-ratio: 4 / 5; }
 .soon p { color: var(--brown); }
 
 /* strona projektu */
@@ -189,7 +197,7 @@ a:hover .ph img { transform: scale(1.03); }
 .next:hover h2 { text-decoration: underline; text-underline-offset: 8px; text-decoration-thickness: 1px; }
 
 /* lightbox */
-.lb { position: fixed; inset: 0; z-index: 60; background: #1E1A17; color: var(--paper); display: none; grid-template-rows: 64px minmax(0, 1fr) 64px; }
+.lb { position: fixed; inset: 0; z-index: 60; background: #3B2D29; color: var(--paper); display: none; grid-template-rows: 64px minmax(0, 1fr) 64px; }
 .lb.is-open { display: grid; }
 .lb-top, .lb-bot { display: flex; align-items: center; justify-content: space-between; padding: 0 24px; }
 .lb-stage { display: flex; align-items: center; justify-content: center; padding: 0 80px; min-height: 0; }
@@ -238,9 +246,12 @@ a:hover .ph img { transform: scale(1.03); }
   html { scroll-behavior: auto; }
 }
 
+@media (max-width: 1360px) { .ftr .mark { font-size: 112px; line-height: 104px; } }
+
 /* tablet */
 @media (max-width: 1080px) {
   :root { --gut: 32px; }
+  .ftr .mark { font-size: 80px; line-height: 80px; letter-spacing: -2px; }
   .t-h1, .contact .big { font-size: 72px; line-height: 72px; letter-spacing: -2px; }
   .p-title { font-size: 80px; line-height: 80px; letter-spacing: -2px; }
   .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
@@ -283,4 +294,7 @@ a:hover .ph img { transform: scale(1.03); }
   .lb-stage { padding: 0 16px; }
   .lb .prev, .lb .nextb { display: none; }
   .contact .lines a { font-size: 20px; line-height: 28px; }
+  .ftr .mark { font-size: 48px; line-height: 48px; letter-spacing: -1px; white-space: normal; margin-top: 40px; }
+  .ftr .col { grid-column: 1 / -1; }
+  .hero-top h1 .streak { width: 64px; margin-left: 8px; }
 }

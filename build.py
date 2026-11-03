@@ -4,6 +4,7 @@ from html import escape
 
 OUT = Path(__file__).parent
 SITE = "Smuga Design"
+STREAK = '<svg class="streak" viewBox="0 0 120 64" aria-hidden="true"><path d="M12 60C14 44 30 38 54 32C76 26 86 20 88 4H108C108 24 92 36 64 42C42 47 32 50 32 60Z"/></svg>'
 EMAIL = "kontakt@smugadesign.pl"
 PHONE = "+48 604 762 946"
 PHONE_HREF = "+48604762946"
@@ -122,17 +123,17 @@ def page(fname, title, desc, body, current=""):
 <meta property="og:title" content="{escape(title)}">
 <meta property="og:description" content="{escape(desc)}">
 <meta property="og:image" content="img/mnc-kotara.webp">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23FEC8C8'/%3E%3Ctext x='16' y='23' font-family='Arial' font-weight='700' font-size='20' text-anchor='middle' fill='%231E1A17'%3ES%3C/text%3E%3C/svg%3E">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23FFC7C8'/%3E%3Ctext x='16' y='23' font-family='Arial' font-weight='700' font-size='20' text-anchor='middle' fill='%235C4741'%3ES%3C/text%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@125,600&family=Hanken+Grotesk:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@112,600&family=Hanken+Grotesk:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/style.css">
 </head>
 <body>
 <a class="skip" href="#main">Przejdź do treści</a>
 <header class="hdr">
   <div class="wrap">
-    <a class="logo" href="index.html" aria-label="Smuga Design, strona główna">SMUGA<small>design</small></a>
+    <a class="logo" href="index.html" aria-label="Smuga Design, strona główna">{STREAK}SMUGA<small>design</small></a>
     <button class="burger" type="button" aria-expanded="false" aria-controls="nav"><span>Menu</span><i aria-hidden="true"></i></button>
     <nav class="nav" id="nav" aria-label="Główne">{links}<a class="cta" href="kontakt.html"{" aria-current=\"page\"" if current == "kontakt.html" else ""}>Kontakt</a></nav>
   </div>
@@ -142,16 +143,12 @@ def page(fname, title, desc, body, current=""):
 </main>
 <footer class="ftr">
   <div class="wrap">
-    <a class="logo" href="index.html">SMUGA<small>design</small></a>
-    <nav aria-label="Stopka">{"".join(f'<a href="{h}">{t}</a>' for h, t in NAV)}<a href="kontakt.html">Kontakt</a></nav>
-    <div class="data">
-      <span>arch. wn. Wioleta Siemieniuk</span>
-      <a href="mailto:{EMAIL}">{EMAIL}</a>
-      <a href="tel:{PHONE_HREF}">{PHONE}</a>
-      <a href="{IG}" rel="noopener">Instagram @smuga_design</a>
-      <a href="{BEHANCE}" rel="noopener">Behance</a>
-    </div>
-    <div class="bottom"><span>© 2026 Smuga Design · Białystok</span><span>Demo projektu strony · Impact Agencja · teksty i dane do uzupełnienia</span></div>
+    {STREAK}
+    <div class="col"><b>Smuga Design</b><span>Projektowanie wnętrz</span><span>arch. wn. Wioleta Siemieniuk</span></div>
+    <div class="col"><b>Kontakt</b><a href="tel:{PHONE_HREF}">{PHONE}</a><a href="mailto:{EMAIL}">{EMAIL}</a></div>
+    <div class="col"><b>Social media</b><a href="{IG}" rel="noopener">@smuga_design</a><a href="{BEHANCE}" rel="noopener">Behance</a></div>
+    <p class="mark" aria-hidden="true">SMUGA DESIGN</p>
+    <div class="bottom"><span>© 2026 Smuga Design · Białystok</span><span>{"  ·  ".join(f'<a href="{h}">{t}</a>' for h, t in NAV)}</span><span>Demo projektu strony · Impact Agencja</span></div>
   </div>
 </footer>
 <script src="assets/app.js" defer></script>
@@ -193,7 +190,7 @@ def steps(label="Jak pracuję"):
 mnc = BY["mnc-concept"]
 home = f"""<section class="hero"><div class="wrap">
   <div class="hero-top">
-    <h1 class="t-h1 rv">Wnętrza, które zostawiają ślad</h1>
+    <h1 class="t-h1 rv">Wnętrza, które zostawiają ślad{STREAK}</h1>
     <div class="intro rv"><p class="t-lead">Pracownia projektowania wnętrz arch. wn. Wiolety Siemieniuk. Ciepły minimalizm z odwagą koloru, dla domów, mieszkań i marek.</p><p class="t-label muted">Białystok · Warszawa · zdalnie</p></div>
   </div>
   <div class="hero-grid">
