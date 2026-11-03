@@ -177,3 +177,44 @@ document.querySelectorAll('.drop').forEach((drop) => {
   ['dragleave', 'drop'].forEach((ev) => drop.addEventListener(ev, () => drop.classList.remove('over')));
   drop.addEventListener('drop', (e) => { e.preventDefault(); input.files = e.dataTransfer.files; show(); });
 });
+
+// indeks realizacji: podgląd zdjęcia przy najechaniu i fokusie
+document.querySelectorAll('.wi').forEach((wi) => {
+  const rows = [...wi.querySelectorAll('.wi-row')];
+  const figs = [...wi.querySelectorAll('.wi-pre figure')];
+  const pick = (i) => { rows.forEach((r, j) => r.classList.toggle('on', i === j)); figs.forEach((f, j) => f.classList.toggle('on', i === j)); };
+  rows.forEach((r, i) => { r.addEventListener('mouseenter', () => pick(i)); r.addEventListener('focus', () => pick(i)); });
+});
+
+// karuzela: przyciski, pasek postępu, przewijanie palcem i klawiaturą
+document.querySelectorAll('.car').forEach((car) => {
+  const track = car.querySelector('.car-track');
+  const prev = car.querySelector('.prev');
+  const next = car.querySelector('.next');
+  const bar = car.querySelector('.car-bar i');
+  const step = () => track.querySelector('figure').getBoundingClientRect().width + 24;
+  const update = () => {
+    const max = track.scrollWidth - track.clientWidth;
+    const k = max > 0 ? track.scrollLeft / max : 0;
+    const vis = track.clientWidth / track.scrollWidth;
+    bar.style.width = `${Math.round(vis * 100)}%`;
+    bar.style.transform = `translateX(${Math.round(k * (1 / vis - 1) * 100)}%)`;
+    prev.disabled = track.scrollLeft <= 2;
+    next.disabled = track.scrollLeft >= max - 2;
+  };
+  prev.addEventListener('click', () => track.scrollBy({ left: -step(), behavior: still ? 'auto' : 'smooth' }));
+  next.addEventListener('click', () => track.scrollBy({ left: step(), behavior: still ? 'auto' : 'smooth' }));
+  track.addEventListener('keydown', (e) => { if (e.key === 'ArrowRight') { e.preventDefault(); next.click(); } if (e.key === 'ArrowLeft') { e.preventDefault(); prev.click(); } });
+  track.addEventListener('scroll', update, { passive: true });
+  window.addEventListener('resize', update);
+  update();
+});
+
+// oferta: podświetlenie aktywnej usługi w menu bocznym
+const ofLinks = [...document.querySelectorAll('.of-nav a')];
+if (ofLinks.length) {
+  const spy = new IntersectionObserver((entries) => {
+    entries.forEach((en) => { if (en.isIntersecting) ofLinks.forEach((a) => a.classList.toggle('on', a.getAttribute('href') === `#${en.target.id}`)); });
+  }, { rootMargin: '-30% 0px -60% 0px' });
+  document.querySelectorAll('.of-item').forEach((s) => spy.observe(s));
+}
