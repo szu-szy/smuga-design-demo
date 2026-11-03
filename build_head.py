@@ -20,10 +20,19 @@ IMG = {
     "mnc-loza": ("Strefa siedzisk przy jasnej kotarze, kawiarnia MNC Concept", (1320, 1731)),
     "mnc-wejscie": ("Logo MNC Concept na białej kotarze, kawiarnia MNC Concept", (808, 632)),
     "mnc-taras": ("Leżaki z logo na ogródku, kawiarnia MNC Concept", (1000, 1293)),
-    "viz-apartament-wwa": ("Sypialnia z muralem i zabudową ze sklejki, mieszkanie w Warszawie, wizualizacja", (808, 632)),
-    "viz-dom-001": ("Kuchnia z wyspą i ryflowaną zabudową, dom jednorodzinny, wizualizacja", (808, 632)),
-    "viz-showroom": ("Jasny showroom z łukami i drewnianą zabudową, wizualizacja", (808, 632)),
+    "viz-apartament-wwa": ("Sypialnia z muralem i zabudową ze sklejki, mieszkanie w Warszawie", (808, 632)),
+    "viz-dom-001": ("Kuchnia z wyspą i ryflowaną zabudową, dom jednorodzinny", (808, 632)),
+    "viz-showroom": ("Jasny showroom z łukami i drewnianą zabudową, showroom Spod igły i nitki", (808, 632)),
     "smuga-wioleta": ("Arch. wn. Wioleta Siemieniuk, Smuga Design", (808, 632)),
+    "wwa-mural": ("Mural nad łóżkiem, mieszkanie w Warszawie", (450, 360)),
+    "wwa-zabudowa": ("Zabudowa ze sklejki, mieszkanie w Warszawie", (300, 420)),
+    "wwa-grafiki": ("Grafiki na ścianie sypialni, mieszkanie w Warszawie", (208, 400)),
+    "dom-wyspa": ("Ryflowana wyspa kuchenna, dom jednorodzinny", (480, 382)),
+    "dom-zabudowa": ("Zabudowa kuchni w jasnym drewnie, dom jednorodzinny", (378, 450)),
+    "dom-okno": ("Okno na ogród z kuchni, dom jednorodzinny", (300, 420)),
+    "show-regal": ("Drewniany regał z podświetleniem, showroom Spod igły i nitki", (328, 500)),
+    "show-luk": ("Łukowe przejście do przymierzalni, showroom Spod igły i nitki", (400, 400)),
+    "show-fotel": ("Rzeźbiarski fotel, showroom Spod igły i nitki", (248, 382)),
 }
 
 PROJECTS = [
@@ -31,7 +40,7 @@ PROJECTS = [
         "slug": "mnc-concept", "code": "SD_MNC.CONCEPT_25", "status": "real", "field": "pink",
         "title": "Kawiarnia MNC Concept", "short": "MNC Concept",
         "typ": "Wnętrze komercyjne", "lok": "Białystok", "rok": "2025",
-        "cover": "mnc-kotara", "card": "mnc-sala",
+        "cover": "mnc-kotara", "card": "mnc-sala", "details": [],
         "lead": "Kawiarnia, w której wnętrze jest częścią marki: jasne kotary, stal i drewno tworzą spokojne tło, a kolor i kwiaty dają mu charakter.",
         "blocks": [
             ("Założenia", "Wnętrze miało pracować jak tło dla marki i ludzi: spokojne na co dzień, wyraziste na zdjęciach z Instagrama."),
@@ -44,7 +53,7 @@ PROJECTS = [
         "slug": "mieszkanie-warszawa", "code": "SD_APARTMENT_002", "status": "viz", "field": "dark",
         "title": "Mieszkanie w Warszawie", "short": "Mieszkanie WWA",
         "typ": "Mieszkanie", "lok": "Warszawa", "rok": "",
-        "cover": "viz-apartament-wwa", "card": "viz-apartament-wwa",
+        "cover": "viz-apartament-wwa", "card": "viz-apartament-wwa", "details": ["wwa-mural", "wwa-zabudowa", "wwa-grafiki"],
         "lead": "Sypialnia, w której sztuka gra pierwsze skrzypce: mural na całą ścianę, ciepła sklejka i spokojne tkaniny.",
         "blocks": [
             ("Założenia", "Jedno odważne wydarzenie na ścianie i bardzo prosta reszta, żeby wnętrze nie męczyło na co dzień."),
@@ -57,7 +66,7 @@ PROJECTS = [
         "slug": "dom-001", "code": "SD_HOUSE_001", "status": "viz", "field": "soft",
         "title": "Dom z widokiem na ogród", "short": "Dom 001",
         "typ": "Dom jednorodzinny", "lok": "", "rok": "",
-        "cover": "viz-dom-001", "card": "viz-dom-001",
+        "cover": "viz-dom-001", "card": "viz-dom-001", "details": ["dom-wyspa", "dom-zabudowa", "dom-okno"],
         "lead": "Kuchnia otwarta na ogród: ryflowane drewno, kamień i dużo światła z okna od podłogi do sufitu.",
         "blocks": [
             ("Założenia", "Kuchnia jako spokojne centrum domu, z widokiem na zieleń z każdego miejsca przy wyspie."),
@@ -70,7 +79,7 @@ PROJECTS = [
         "slug": "showroom-spod-igly-i-nitki", "code": "SD_SHOWROOM", "status": "viz", "field": "",
         "title": "Showroom Spod igły i nitki", "short": "Showroom",
         "typ": "Wnętrze komercyjne", "lok": "", "rok": "",
-        "cover": "viz-showroom", "card": "viz-showroom",
+        "cover": "viz-showroom", "card": "viz-showroom", "details": ["show-regal", "show-luk", "show-fotel"],
         "lead": "Jasny showroom, w którym łuki, drewno i miękkie światło prowadzą klientkę od wejścia do przymierzalni.",
         "blocks": [
             ("Założenia", "Przestrzeń sprzedaży, która uspokaja i pozwala skupić się na produkcie."),

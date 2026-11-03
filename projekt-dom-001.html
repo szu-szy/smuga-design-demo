@@ -3,51 +3,66 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Dom z widokiem na ogród · Wizualizacja · Smuga Design</title>
+<title>Dom z widokiem na ogród · Realizacje · Smuga Design</title>
 <meta name="description" content="Kuchnia otwarta na ogród: ryflowane drewno, kamień i dużo światła z okna od podłogi do sufitu.">
 <meta name="robots" content="noindex, nofollow">
-<meta property="og:title" content="Dom z widokiem na ogród · Wizualizacja · Smuga Design">
+<meta property="og:title" content="Dom z widokiem na ogród · Realizacje · Smuga Design">
 <meta property="og:description" content="Kuchnia otwarta na ogród: ryflowane drewno, kamień i dużo światła z okna od podłogi do sufitu.">
 <meta property="og:image" content="img/viz-dom-001.webp">
 <meta name="theme-color" content="#FFFFFF">
+<script>try{if(!sessionStorage.getItem('smuga-ld')&&!matchMedia('(prefers-reduced-motion: reduce)').matches)document.documentElement.classList.add('ld')}catch(e){}</script>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 64'%3E%3Cpath fill='%23FFC7C8' d='M12 60C14 44 30 38 54 32C76 26 86 20 88 4H108C108 24 92 36 64 42C42 47 32 50 32 60Z'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..112,400..600&family=Hanken+Grotesk:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/style.css?v=3">
+<link rel="stylesheet" href="assets/style.css?v=4">
 </head>
 <body>
+<div class="loader" aria-hidden="true"><svg viewBox="0 0 120 64"><path d="M22 58C24 46 36 40 58 35C80 30 96 22 98 6"/></svg><div class="word"><span style="animation-delay:300ms">S</span><span style="animation-delay:340ms">M</span><span style="animation-delay:380ms">U</span><span style="animation-delay:420ms">G</span><span style="animation-delay:460ms">A</span><span style="animation-delay:500ms">&nbsp;</span><span style="animation-delay:540ms">D</span><span style="animation-delay:580ms">E</span><span style="animation-delay:620ms">S</span><span style="animation-delay:660ms">I</span><span style="animation-delay:700ms">G</span><span style="animation-delay:740ms">N</span></div><div class="bar"><i></i></div></div>
 <a class="skip" href="#main">Przejdź do treści</a>
 <header class="hdr">
   <div class="wrap">
-    <nav class="nav" aria-label="Projekty"><a href="realizacje.html">Realizacje</a><a href="wizualizacje.html" aria-current="page">Wizualizacje</a></nav>
-    <a class="logo" href="index.html" aria-label="Smuga Design, strona główna"><svg class="streak-draw" viewBox="0 0 120 64" aria-hidden="true"><path d="M22 58C24 46 36 40 58 35C80 30 96 22 98 6"/></svg>SMUGA</a>
-    <nav class="nav r" aria-label="Pracownia"><a href="oferta.html">Oferta</a><a href="o-mnie.html">O mnie</a><a href="kontakt.html">Kontakt</a></nav>
+    <nav class="nav" aria-label="Główne">
+      <a href="realizacje.html" aria-current="page">Realizacje</a>
+      <button class="mm-btn" type="button" aria-expanded="false" aria-controls="mm">Oferta<i aria-hidden="true"></i></button>
+    </nav>
+    <a class="logo" href="index.html" aria-label="Smuga Design, strona główna"><svg class="streak" viewBox="0 0 120 64" aria-hidden="true"><path d="M12 60C14 44 30 38 54 32C76 26 86 20 88 4H108C108 24 92 36 64 42C42 47 32 50 32 60Z"/></svg>SMUGA</a>
+    <nav class="nav r" aria-label="Pracownia">
+      <a href="o-mnie.html">O mnie</a>
+      <a class="cta-s" href="kontakt.html">Kontakt</a>
+    </nav>
     <button class="burger" type="button" aria-expanded="false" aria-controls="drawer"><span>Menu</span><i aria-hidden="true"></i></button>
   </div>
+  <div class="mm" id="mm">
+    <div class="wrap">
+      <div class="mm-intro"><div><p class="lbl muted">Oferta</p><p class="d-s" style="margin-top:12px">Od jednej konsultacji po kompletny projekt wnętrza.</p></div><a class="lnk" href="oferta.html">Cała oferta</a></div>
+      <nav class="mm-list" aria-label="Usługi"><a href="oferta.html#mieszkania"><span class="lbl muted">01</span><span class="d-s">Mieszkania</span><span class="ar" aria-hidden="true">&#8594;</span></a><a href="oferta.html#domy"><span class="lbl muted">02</span><span class="d-s">Domy</span><span class="ar" aria-hidden="true">&#8594;</span></a><a href="oferta.html#komercyjne"><span class="lbl muted">03</span><span class="d-s">Wnętrza komercyjne</span><span class="ar" aria-hidden="true">&#8594;</span></a><a href="oferta.html#wizualizacje"><span class="lbl muted">04</span><span class="d-s">Wizualizacje</span><span class="ar" aria-hidden="true">&#8594;</span></a><a href="oferta.html#konsultacje"><span class="lbl muted">05</span><span class="d-s">Konsultacje</span><span class="ar" aria-hidden="true">&#8594;</span></a></nav>
+      <div class="mm-pre"><figure aria-hidden="true"><div class="ph "><img src="img/viz-apartament-wwa-s.webp" srcset="img/viz-apartament-wwa-s.webp 800w, img/viz-apartament-wwa.webp 808w" sizes="360px" width="808" height="632" alt="Sypialnia z muralem i zabudową ze sklejki, mieszkanie w Warszawie" loading="lazy" decoding="async"></div><figcaption class="small muted">Od kawalerki po apartament: układ, zabudowy, światło i materiały.</figcaption></figure><figure aria-hidden="true"><div class="ph "><img src="img/viz-dom-001-s.webp" srcset="img/viz-dom-001-s.webp 800w, img/viz-dom-001.webp 808w" sizes="360px" width="808" height="632" alt="Kuchnia z wyspą i ryflowaną zabudową, dom jednorodzinny" loading="lazy" decoding="async"></div><figcaption class="small muted">Całe wnętrze domu jednorodzinnego, najlepiej już na etapie budowy.</figcaption></figure><figure aria-hidden="true"><div class="ph "><img src="img/mnc-bar-s.webp" srcset="img/mnc-bar-s.webp 800w, img/mnc-bar.webp 1062w" sizes="360px" width="1062" height="1400" alt="Bar ze stali i kwiaty przy ekspresie, kawiarnia MNC Concept" loading="lazy" decoding="async"></div><figcaption class="small muted">Kawiarnie, showroomy i lokale, które pracują na markę.</figcaption></figure><figure aria-hidden="true"><div class="ph "><img src="img/viz-showroom-s.webp" srcset="img/viz-showroom-s.webp 800w, img/viz-showroom.webp 808w" sizes="360px" width="808" height="632" alt="Jasny showroom z łukami i drewnianą zabudową, showroom Spod igły i nitki" loading="lazy" decoding="async"></div><figcaption class="small muted">Realistyczne obrazy wnętrza, zanim zapadną decyzje i wydatki.</figcaption></figure><figure aria-hidden="true"><div class="ph "><img src="img/mnc-loza-s.webp" srcset="img/mnc-loza-s.webp 800w, img/mnc-loza.webp 1320w" sizes="360px" width="1320" height="1731" alt="Strefa siedzisk przy jasnej kotarze, kawiarnia MNC Concept" loading="lazy" decoding="async"></div><figcaption class="small muted">Jedno spotkanie i konkretny kierunek zmian do zrobienia samodzielnie.</figcaption></figure></div>
+    </div>
+  </div>
 </header>
-<div class="drawer" id="drawer"><a href="realizacje.html">Realizacje</a><a href="wizualizacje.html">Wizualizacje</a><a href="oferta.html">Oferta</a><a href="o-mnie.html">O mnie</a><a href="kontakt.html">Kontakt</a><div class="small"><a href="mailto:kontakt@smugadesign.pl">kontakt@smugadesign.pl</a><a href="tel:+48604762946">+48 604 762 946</a></div></div>
+<div class="drawer" id="drawer"><a href="realizacje.html">Realizacje</a><a href="oferta.html">Oferta</a><div class="sub"><a href="oferta.html#mieszkania">Mieszkania</a><a href="oferta.html#domy">Domy</a><a href="oferta.html#komercyjne">Wnętrza komercyjne</a><a href="oferta.html#wizualizacje">Wizualizacje</a><a href="oferta.html#konsultacje">Konsultacje</a></div><a href="o-mnie.html">O mnie</a><a href="kontakt.html">Kontakt</a><div class="small"><a href="mailto:kontakt@smugadesign.pl">kontakt@smugadesign.pl</a><a href="tel:+48604762946">+48 604 762 946</a></div></div>
 <main id="main">
 <div class="p-top"><div class="wrap">
-  <div class="row"><p class="crumbs"><a href="index.html">Start</a><span>/</span><a href="wizualizacje.html">Wizualizacje</a><span>/</span><span>Dom 001</span></p><span class="code">SD_HOUSE_001</span></div>
-  <h1 class="d-xl">Dom z widokiem na ogród</h1>
+  <p class="crumbs"><a href="index.html">Start</a><span>/</span><a href="realizacje.html">Realizacje</a><span>/</span><span>Dom 001</span></p>
+  <div class="g12"><h1 class="d-xl">Dom z widokiem na ogród</h1><div class="facts-top"><div><span class="lbl muted">Typ</span><span>Dom jednorodzinny</span></div><div><span class="lbl muted">Zakres</span><span>Projekt wnętrza</span></div></div></div>
 </div></div>
-<div class="p-hero"><div class="wrap mask in"><div class="ph "><img src="img/viz-dom-001-s.webp" srcset="img/viz-dom-001-s.webp 800w, img/viz-dom-001.webp 808w" sizes="100vw" width="808" height="632" alt="Kuchnia z wyspą i ryflowaną zabudową, dom jednorodzinny, wizualizacja" fetchpriority="high" decoding="async"></div></div></div>
+<div class="p-hero"><div class="wrap"><button type="button" data-open="0" aria-label="Powiększ zdjęcie główne"><div class="ph "><img src="img/viz-dom-001-s.webp" srcset="img/viz-dom-001-s.webp 800w, img/viz-dom-001.webp 808w" sizes="100vw" width="808" height="632" alt="Kuchnia z wyspą i ryflowaną zabudową, dom jednorodzinny" fetchpriority="high" decoding="async"></div></button></div></div>
 <section class="p-body"><div class="wrap g12">
-  <aside class="p-side">
-    <div><span class="tag">Wizualizacja</span></div>
-    <p class="lead">Kuchnia otwarta na ogród: ryflowane drewno, kamień i dużo światła z okna od podłogi do sufitu.</p>
-    <dl class="facts"><div><dt>Kod</dt><dd>SD_HOUSE_001</dd></div><div><dt>Typ</dt><dd>Dom jednorodzinny</dd></div><div><dt>Status</dt><dd>Wizualizacja</dd></div></dl>
-    <div class="blocks"><div><h2>Założenia</h2><p>Kuchnia jako spokojne centrum domu, z widokiem na zieleń z każdego miejsca przy wyspie.</p></div><div><h2>Materiały</h2><p>Ryflowany front wyspy, zabudowa w jasnym drewnie, kamienne blaty i czarne, lekkie hokery.</p></div><div><h2>Efekt</h2><p>Ciepły minimalizm, w którym rysunek drewna i kamienia zastępuje dekoracje.</p></div></div>
-  </aside>
-  <div class="p-note"><p class="lbl muted">Galeria</p><p class="d-s">Pełna galeria wizualizacji pojawi się tutaj po przekazaniu materiałów.</p><p class="muted">W demo pokazujemy okładkę projektu z Behance. Gdy wnętrze zostanie wykonane, nad galerią pojawi się przełącznik „Zdjęcia z realizacji | Wizualizacje”.</p></div>
+  <aside class="p-side"><p class="lead">Kuchnia otwarta na ogród: ryflowane drewno, kamień i dużo światła z okna od podłogi do sufitu.</p><div class="blocks"><div><h2>Założenia</h2><p>Kuchnia jako spokojne centrum domu, z widokiem na zieleń z każdego miejsca przy wyspie.</p></div><div><h2>Materiały</h2><p>Ryflowany front wyspy, zabudowa w jasnym drewnie, kamienne blaty i czarne, lekkie hokery.</p></div><div><h2>Efekt</h2><p>Ciepły minimalizm, w którym rysunek drewna i kamienia zastępuje dekoracje.</p></div></div><a class="lnk" href="kontakt.html">Chcę podobne wnętrze</a></aside>
+  <div class="p-gal three"><figure class="mask"><button type="button" data-open="1" aria-label="Powiększ zdjęcie 2 z 4"><div class="ph r-3-4"><img src="img/dom-wyspa-s.webp" srcset="img/dom-wyspa-s.webp 480w, img/dom-wyspa.webp 480w" sizes="(max-width: 1080px) 100vw, 20vw" width="480" height="382" alt="Ryflowana wyspa kuchenna, dom jednorodzinny" loading="lazy" decoding="async"></div></button><figcaption>Ryflowana wyspa kuchenna</figcaption></figure><figure class="mask"><button type="button" data-open="2" aria-label="Powiększ zdjęcie 3 z 4"><div class="ph r-3-4"><img src="img/dom-zabudowa-s.webp" srcset="img/dom-zabudowa-s.webp 378w, img/dom-zabudowa.webp 378w" sizes="(max-width: 1080px) 100vw, 20vw" width="378" height="450" alt="Zabudowa kuchni w jasnym drewnie, dom jednorodzinny" loading="lazy" decoding="async"></div></button><figcaption>Zabudowa kuchni w jasnym drewnie</figcaption></figure><figure class="mask"><button type="button" data-open="3" aria-label="Powiększ zdjęcie 4 z 4"><div class="ph r-3-4"><img src="img/dom-okno-s.webp" srcset="img/dom-okno-s.webp 300w, img/dom-okno.webp 300w" sizes="(max-width: 1080px) 100vw, 20vw" width="300" height="420" alt="Okno na ogród z kuchni, dom jednorodzinny" loading="lazy" decoding="async"></div></button><figcaption>Okno na ogród z kuchni</figcaption></figure><blockquote class="d-m rv">"Ciepły minimalizm, w którym rysunek drewna i kamienia zastępuje dekoracje."</blockquote></div>
 </div></section>
-<span hidden data-shot="img/viz-dom-001.webp" data-alt="Kuchnia z wyspą i ryflowaną zabudową, dom jednorodzinny, wizualizacja"></span>
-<a class="next-chap" href="projekt-showroom-spod-igly-i-nitki.html"><div class="wrap g12">
-  <div class="txt"><p class="lbl">Następny projekt</p><h2 class="d-l">Showroom Spod igły i nitki</h2><span class="code">SD_SHOWROOM · Wizualizacja</span></div>
-  <div class="ph r-3-2"><img src="img/viz-showroom-s.webp" srcset="img/viz-showroom-s.webp 800w, img/viz-showroom.webp 808w" sizes="(max-width: 860px) 100vw, 58vw" width="808" height="632" alt="Jasny showroom z łukami i drewnianą zabudową, wizualizacja" loading="lazy" decoding="async"></div>
-</div></a>
-
+<span hidden data-shot="img/viz-dom-001.webp" data-alt="Kuchnia z wyspą i ryflowaną zabudową, dom jednorodzinny"></span><span hidden data-shot="img/dom-wyspa.webp" data-alt="Ryflowana wyspa kuchenna, dom jednorodzinny"></span><span hidden data-shot="img/dom-zabudowa.webp" data-alt="Zabudowa kuchni w jasnym drewnie, dom jednorodzinny"></span><span hidden data-shot="img/dom-okno.webp" data-alt="Okno na ogród z kuchni, dom jednorodzinny"></span>
+<section class="more-w"><div class="wrap">
+  <div class="sec-h"><div><span class="lbl muted">Zobacz też</span><h2 class="d-m">Inne realizacje</h2></div><a class="lnk" href="realizacje.html">Wszystkie realizacje</a></div>
+  <div class="strip stag" style="grid-template-columns:repeat(3,minmax(0,1fr))"><a class="tile mask" href="projekt-mnc-concept.html"><div class="ph r-5-4"><img src="img/mnc-sala-s.webp" srcset="img/mnc-sala-s.webp 800w, img/mnc-sala.webp 1158w" sizes="(max-width: 860px) 50vw, 33vw" width="1158" height="1500" alt="Sala z ławą wzdłuż ściany i okrągłymi kinkietami, kawiarnia MNC Concept" loading="lazy" decoding="async"></div><div class="row"><h3>Kawiarnia MNC Concept</h3><span class="ar" aria-hidden="true">&#8594;</span></div><p class="lbl muted">Wnętrze komercyjne · Białystok · 2025</p></a><a class="tile mask" href="projekt-mieszkanie-warszawa.html"><div class="ph r-5-4"><img src="img/viz-apartament-wwa-s.webp" srcset="img/viz-apartament-wwa-s.webp 800w, img/viz-apartament-wwa.webp 808w" sizes="(max-width: 860px) 50vw, 33vw" width="808" height="632" alt="Sypialnia z muralem i zabudową ze sklejki, mieszkanie w Warszawie" loading="lazy" decoding="async"></div><div class="row"><h3>Mieszkanie w Warszawie</h3><span class="ar" aria-hidden="true">&#8594;</span></div><p class="lbl muted">Mieszkanie · Warszawa</p></a><a class="tile mask" href="projekt-showroom-spod-igly-i-nitki.html"><div class="ph r-5-4"><img src="img/viz-showroom-s.webp" srcset="img/viz-showroom-s.webp 800w, img/viz-showroom.webp 808w" sizes="(max-width: 860px) 50vw, 33vw" width="808" height="632" alt="Jasny showroom z łukami i drewnianą zabudową, showroom Spod igły i nitki" loading="lazy" decoding="async"></div><div class="row"><h3>Showroom Spod igły i nitki</h3><span class="ar" aria-hidden="true">&#8594;</span></div><p class="lbl muted">Wnętrze komercyjne</p></a></div>
+</div></section>
+<div class="lb" role="dialog" aria-modal="true" aria-label="Podgląd zdjęć">
+  <div class="lb-top"><span class="lb-count lbl"></span><button type="button" class="close">Zamknij</button></div>
+  <div class="lb-stage"><img src="" alt=""></div>
+  <div class="lb-bot"><span class="lb-cap small"></span></div>
+  <button type="button" class="prev" aria-label="Poprzednie zdjęcie">&#8592;</button><button type="button" class="nextb" aria-label="Następne zdjęcie">&#8594;</button>
+</div>
 <section class="cta" aria-labelledby="cta-h">
   <div class="wrap">
     <h2 class="d-xxl rv" id="cta-h">Porozmawiajmy</h2>
@@ -66,9 +81,9 @@
     <div class="col"><b>Kontakt</b><a href="tel:+48604762946">+48 604 762 946</a><a href="mailto:kontakt@smugadesign.pl">kontakt@smugadesign.pl</a></div>
     <div class="col"><b>Social media</b><a href="https://www.instagram.com/smuga_design/" rel="noopener">@smuga_design</a><a href="https://www.behance.net/smugadesign" rel="noopener">Behance</a></div>
     <p class="mark" aria-hidden="true">SMUGA DESIGN</p>
-    <div class="bottom"><span>© 2026 Smuga Design · Białystok</span><span><a href="realizacje.html">Realizacje</a> · <a href="wizualizacje.html">Wizualizacje</a> · <a href="oferta.html">Oferta</a> · <a href="o-mnie.html">O mnie</a> · <a href="kontakt.html">Kontakt</a></span><span>Demo projektu strony · Impact Agencja</span></div>
+    <div class="bottom"><span>© 2026 Smuga Design · Białystok</span><span><a href="realizacje.html">Realizacje</a> · <a href="oferta.html">Oferta</a> · <a href="o-mnie.html">O mnie</a> · <a href="kontakt.html">Kontakt</a></span><span>Demo projektu strony · Impact Agencja</span></div>
   </div>
 </footer>
-<script src="assets/app.js?v=3" defer></script>
+<script src="assets/app.js?v=4" defer></script>
 </body>
 </html>

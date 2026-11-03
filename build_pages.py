@@ -1,57 +1,72 @@
-"""Szablony stron demo Smuga Design v2. Dane w build_head.py. Uruchom: python3 build.py"""
+"""Szablony stron demo Smuga Design v3. Dane w build_head.py. Uruchom: python3 build.py"""
 from build_head import *  # noqa: F401,F403 - dane projektów, zdjęć i kontaktu
 
-V = "3"
-NAV_L = [("realizacje.html", "Realizacje"), ("wizualizacje.html", "Wizualizacje")]
-NAV_R = [("oferta.html", "Oferta"), ("o-mnie.html", "O mnie"), ("kontakt.html", "Kontakt")]
+V = "4"
 STREAK_PATH = "M12 60C14 44 30 38 54 32C76 26 86 20 88 4H108C108 24 92 36 64 42C42 47 32 50 32 60Z"
 DRAW_PATH = "M22 58C24 46 36 40 58 35C80 30 96 22 98 6"
+SERVICES = [
+    ("mieszkania", "Mieszkania", "Od kawalerki po apartament: układ, zabudowy, światło i materiały.", "viz-apartament-wwa"),
+    ("domy", "Domy", "Całe wnętrze domu jednorodzinnego, najlepiej już na etapie budowy.", "viz-dom-001"),
+    ("komercyjne", "Wnętrza komercyjne", "Kawiarnie, showroomy i lokale, które pracują na markę.", "mnc-bar"),
+    ("wizualizacje", "Wizualizacje", "Realistyczne obrazy wnętrza, zanim zapadną decyzje i wydatki.", "viz-showroom"),
+    ("konsultacje", "Konsultacje", "Jedno spotkanie i konkretny kierunek zmian do zrobienia samodzielnie.", "mnc-loza"),
+]
+STEPS = [
+    ("Rozmowa", "Poznaję Ciebie, sposób życia i potrzeby. Ustalamy zakres i termin."),
+    ("Pomiar", "Mierzę wnętrze, robię zdjęcia, zbieram Twoje inspiracje."),
+    ("Koncepcja", "Układ funkcjonalny i wizualizacje, które dopracowujemy razem."),
+    ("Projekt wykonawczy", "Rysunki dla ekip, dobór materiałów i zestawienie."),
+    ("Realizacja", "Jestem przy wyborach na budowie, aż do sesji zdjęciowej."),
+]
 
 
 def mark(cls="streak"):
     return f'<svg class="{cls}" viewBox="0 0 120 64" aria-hidden="true"><path d="{STREAK_PATH}"/></svg>'
 
 
-def mark_draw():
-    return f'<svg class="streak-draw" viewBox="0 0 120 64" aria-hidden="true"><path d="{DRAW_PATH}"/></svg>'
-
-
 def pic(name, ratio="r-4-5", sizes="(max-width: 860px) 100vw, 50vw", eager=False):
     alt, (w, h) = IMG[name]
     load = 'fetchpriority="high"' if eager else 'loading="lazy"'
-    return (f'<div class="ph {ratio}"><img src="img/{name}-s.webp" srcset="img/{name}-s.webp 800w, img/{name}.webp {min(w, 1600)}w" '
+    return (f'<div class="ph {ratio}"><img src="img/{name}-s.webp" srcset="img/{name}-s.webp {min(w, 800)}w, img/{name}.webp {min(w, 1600)}w" '
             f'sizes="{sizes}" width="{w}" height="{h}" alt="{escape(alt)}" {load} decoding="async"></div>')
 
 
-def status_name(p):
-    return STATUS[p["status"]][0]
+def place(p):
+    return " · ".join(x for x in (p["typ"], p["lok"], p["rok"]) if x)
 
 
-def tag(p):
-    return f'<span class="tag{" real" if p["status"] == "real" else ""}">{status_name(p)}</span>'
-
-
-def facts(p, keys=("Typ", "Lokalizacja", "Rok", "Status")):
-    vals = {"Kod": p["code"], "Typ": p["typ"], "Lokalizacja": p["lok"], "Rok": p["rok"], "Status": status_name(p)}
-    return "".join(f"<div><dt>{k}</dt><dd>{escape(vals[k])}</dd></div>" for k in keys if vals[k])
-
-
-def header(current, over):
-    left = "".join(f'<a href="{h}"{" aria-current=\"page\"" if h == current else ""}>{t}</a>' for h, t in NAV_L)
-    right = "".join(f'<a href="{h}"{" aria-current=\"page\"" if h == current else ""}>{t}</a>' for h, t in NAV_R)
-    drawer = "".join(f'<a href="{h}">{t}</a>' for h, t in NAV_L + NAV_R)
-    return f"""<header class="hdr{" over" if over else ""}">
+def header(current):
+    oferta_cur = current == "oferta.html"
+    mm_items = "".join(f'<a href="oferta.html#{k}"><span class="lbl muted">{i:02d}</span><span class="d-s">{n}</span><span class="ar" aria-hidden="true">&#8594;</span></a>' for i, (k, n, _d, _img) in enumerate(SERVICES, start=1))
+    mm_figs = "".join(f'<figure aria-hidden="true">{pic(img, "", "360px")}<figcaption class="small muted">{d}</figcaption></figure>' for _k, _n, d, img in SERVICES)
+    sub = "".join(f'<a href="oferta.html#{k}">{n}</a>' for k, n, _d, _i in SERVICES)
+    ac = lambda h: ' aria-current="page"' if h == current else ""
+    return f"""<header class="hdr">
   <div class="wrap">
-    <nav class="nav" aria-label="Projekty">{left}</nav>
-    <a class="logo" href="index.html" aria-label="Smuga Design, strona główna">{mark_draw()}SMUGA</a>
-    <nav class="nav r" aria-label="Pracownia">{right}</nav>
+    <nav class="nav" aria-label="Główne">
+      <a href="realizacje.html"{ac("realizacje.html")}>Realizacje</a>
+      <button class="mm-btn{" cur" if oferta_cur else ""}" type="button" aria-expanded="false" aria-controls="mm">Oferta<i aria-hidden="true"></i></button>
+    </nav>
+    <a class="logo" href="index.html" aria-label="Smuga Design, strona główna">{mark()}SMUGA</a>
+    <nav class="nav r" aria-label="Pracownia">
+      <a href="o-mnie.html"{ac("o-mnie.html")}>O mnie</a>
+      <a class="cta-s" href="kontakt.html"{ac("kontakt.html")}>Kontakt</a>
+    </nav>
     <button class="burger" type="button" aria-expanded="false" aria-controls="drawer"><span>Menu</span><i aria-hidden="true"></i></button>
   </div>
+  <div class="mm" id="mm">
+    <div class="wrap">
+      <div class="mm-intro"><div><p class="lbl muted">Oferta</p><p class="d-s" style="margin-top:12px">Od jednej konsultacji po kompletny projekt wnętrza.</p></div><a class="lnk" href="oferta.html">Cała oferta</a></div>
+      <nav class="mm-list" aria-label="Usługi">{mm_items}</nav>
+      <div class="mm-pre">{mm_figs}</div>
+    </div>
+  </div>
 </header>
-<div class="drawer" id="drawer">{drawer}<div class="small"><a href="mailto:{EMAIL}">{EMAIL}</a><a href="tel:{PHONE_HREF}">{PHONE}</a></div></div>"""
+<div class="drawer" id="drawer"><a href="realizacje.html">Realizacje</a><a href="oferta.html">Oferta</a><div class="sub">{sub}</div><a href="o-mnie.html">O mnie</a><a href="kontakt.html">Kontakt</a><div class="small"><a href="mailto:{EMAIL}">{EMAIL}</a><a href="tel:{PHONE_HREF}">{PHONE}</a></div></div>"""
 
 
 def footer():
+    links = [("realizacje.html", "Realizacje"), ("oferta.html", "Oferta"), ("o-mnie.html", "O mnie"), ("kontakt.html", "Kontakt")]
     return f"""<footer class="ftr">
   <div class="wrap g12">
     <div class="mk">{mark()}</div>
@@ -59,12 +74,15 @@ def footer():
     <div class="col"><b>Kontakt</b><a href="tel:{PHONE_HREF}">{PHONE}</a><a href="mailto:{EMAIL}">{EMAIL}</a></div>
     <div class="col"><b>Social media</b><a href="{IG}" rel="noopener">@smuga_design</a><a href="{BEHANCE}" rel="noopener">Behance</a></div>
     <p class="mark" aria-hidden="true">SMUGA DESIGN</p>
-    <div class="bottom"><span>© 2026 Smuga Design · Białystok</span><span>{" · ".join(f'<a href="{h}">{t}</a>' for h, t in NAV_L + NAV_R)}</span><span>Demo projektu strony · Impact Agencja</span></div>
+    <div class="bottom"><span>© 2026 Smuga Design · Białystok</span><span>{" · ".join(f'<a href="{h}">{t}</a>' for h, t in links)}</span><span>Demo projektu strony · Impact Agencja</span></div>
   </div>
 </footer>"""
 
 
-def page(fname, title, desc, body, current="", over=False, og="mnc-kotara"):
+LOADER = f"""<div class="loader" aria-hidden="true"><svg viewBox="0 0 120 64"><path d="{DRAW_PATH}"/></svg><div class="word">{"".join(f'<span style="animation-delay:{300 + i * 40}ms">{"&nbsp;" if c == " " else c}</span>' for i, c in enumerate("SMUGA DESIGN"))}</div><div class="bar"><i></i></div></div>"""
+
+
+def page(fname, title, desc, body, current="", og="mnc-kotara"):
     html = f"""<!doctype html>
 <html lang="pl">
 <head>
@@ -77,6 +95,7 @@ def page(fname, title, desc, body, current="", over=False, og="mnc-kotara"):
 <meta property="og:description" content="{escape(desc)}">
 <meta property="og:image" content="img/{og}.webp">
 <meta name="theme-color" content="#FFFFFF">
+<script>try{{if(!sessionStorage.getItem('smuga-ld')&&!matchMedia('(prefers-reduced-motion: reduce)').matches)document.documentElement.classList.add('ld')}}catch(e){{}}</script>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 64'%3E%3Cpath fill='%23FFC7C8' d='{STREAK_PATH}'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -84,8 +103,9 @@ def page(fname, title, desc, body, current="", over=False, og="mnc-kotara"):
 <link rel="stylesheet" href="assets/style.css?v={V}">
 </head>
 <body>
+{LOADER}
 <a class="skip" href="#main">Przejdź do treści</a>
-{header(current, over)}
+{header(current)}
 <main id="main">
 {body}
 </main>
@@ -110,179 +130,134 @@ def cta():
 </section>"""
 
 
-STEPS = [
-    ("Rozmowa", "Poznaję Ciebie, sposób życia i potrzeby. Ustalamy zakres i termin."),
-    ("Pomiar", "Mierzę wnętrze, robię zdjęcia, zbieram Twoje inspiracje."),
-    ("Koncepcja", "Układ funkcjonalny i wizualizacje, które dopracowujemy razem."),
-    ("Projekt wykonawczy", "Rysunki dla ekip, dobór materiałów i zestawienie kosztów."),
-    ("Realizacja", "Jestem przy wyborach na budowie, aż do sesji zdjęciowej."),
-]
-
-
-def process(title="Pięć kroków od pierwszej rozmowy do gotowego wnętrza"):
-    lis = "".join(f"<li><b>{a}</b><p class=\"muted\">{b}</p></li>" for a, b in STEPS)
-    return f"""<section class="proc"><div class="wrap">
-  <div class="head g12"><p class="lbl">Jak pracuję</p><h2 class="d-m rv">{title}</h2></div>
-  <ol class="stag">{lis}</ol>
-</div></section>"""
-
-
-SERVICES = [
-    ("mieszkania", "Mieszkania", "Od kawalerki po apartament. Układ, zabudowy, światło, materiały."),
-    ("domy", "Domy", "Całe wnętrze domu jednorodzinnego, także na etapie budowy."),
-    ("komercyjne", "Wnętrza komercyjne", "Kawiarnie, showroomy, lokale usługowe, które pracują na markę."),
-    ("wizualizacje", "Wizualizacje", "Realistyczne obrazy wnętrza, zanim zapadną decyzje i wydatki."),
-    ("konsultacje", "Konsultacje", "Jedno spotkanie, konkretny kierunek kolorów, materiałów i zmian."),
-]
+def tile(p, ratio="r-4-5", sizes="(max-width: 860px) 50vw, 25vw"):
+    return (f'<a class="tile mask" href="projekt-{p["slug"]}.html">{pic(p["card"], ratio, sizes)}'
+            f'<div class="row"><h3>{escape(p["title"])}</h3><span class="ar" aria-hidden="true">&#8594;</span></div>'
+            f'<p class="lbl muted">{escape(place(p))}</p></a>')
 
 
 # STRONA GŁÓWNA
-chapters = []
-for i, p in enumerate(PROJECTS, start=1):
-    flip = " flip" if i % 2 == 0 else ""
-    ratio = "r-5-4"
-    img = p["card"] if p["status"] == "real" else p["cover"]
-    chapters.append(f"""<section class="chap {p["field"]}{flip}" aria-labelledby="ch{i}">
-  <div class="wrap">
-    <div class="chap-top"><span class="num">{i:02d} / {len(PROJECTS):02d}</span><span class="code">{p["code"]}</span>{tag(p)}</div>
-    <div class="g12">
-      <a class="media mask" href="projekt-{p["slug"]}.html" tabindex="-1" aria-hidden="true">{pic(img, ratio, "(max-width: 1080px) 100vw, 66vw")}</a>
-      <div class="txt stag">
-        <h2 class="d-m" id="ch{i}">{escape(p["title"])}</h2>
-        <p>{p["lead"]}</p>
-        <dl class="meta">{facts(p)}</dl>
-        <a class="lnk" href="projekt-{p["slug"]}.html">Zobacz projekt</a>
-      </div>
+SLIDES = [("mnc-kotara", "Kawiarnia MNC Concept · wejście"), ("mnc-sala", "Kawiarnia MNC Concept · sala"), ("mnc-loza", "Kawiarnia MNC Concept · strefa siedzisk"), ("mnc-lada", "Kawiarnia MNC Concept · lada")]
+slides = "".join(f'<div class="sl{" on" if i == 0 else ""}" data-cap="{escape(c)}"><img src="img/{n}.webp" width="{IMG[n][1][0]}" height="{IMG[n][1][1]}" alt="{escape(IMG[n][0])}"{" fetchpriority=\"high\"" if i == 0 else " loading=\"lazy\""}></div>' for i, (n, c) in enumerate(SLIDES))
+bars = "".join(f'<button type="button" aria-label="Pokaż zdjęcie {i + 1}"><i></i></button>' for i in range(len(SLIDES)))
+words = ["Projektowanie wnętrz", "Mieszkania", "Domy", "Wnętrza komercyjne", "Białystok", "Warszawa"]
+grp = "".join(f"<span>{w}</span>{mark()}" for w in words)
+mnc = BY["mnc-concept"]
+mos_imgs = [("mnc-bar", "r-4-5"), ("wwa-zabudowa", "r-3-4"), ("dom-wyspa", "r-5-4"), ("show-fotel", "r-2-3"), ("show-regal", "r-2-3"), ("mnc-taras", "r-4-5"), ("wwa-grafiki", "r-2-3"), ("mnc-wejscie", "r-5-4")]
+slug_of = lambda n: "mnc-concept" if n.startswith("mnc") else {"wwa": "mieszkanie-warszawa", "dom": "dom-001", "sho": "showroom-spod-igly-i-nitki"}[n[:3]]
+mos = "".join(f'<a href="projekt-{slug_of(n)}.html">{pic(n, r, "(max-width: 860px) 50vw, 25vw")}<span>{escape(IMG[n][0])}</span></a>' for n, r in mos_imgs)
+
+home = f"""<section class="hero" aria-labelledby="hero-h" style="--n:{len(SLIDES)}">
+  <div class="hero-txt">
+    {mark()}
+    <div><p class="lbl" style="margin-bottom:24px">Pracownia projektowania wnętrz</p><h1 class="d-xl" id="hero-h">Wnętrza, które zostawiają ślad</h1></div>
+    <p class="lead">Ciepły minimalizm z odwagą koloru. Domy, mieszkania i lokale w Białymstoku, Warszawie i zdalnie.</p>
+    <div class="hero-cap">
+      <div class="now lbl"><span class="name">{SLIDES[0][1]}</span><span class="num">01 / {len(SLIDES):02d}</span></div>
+      <div class="prog">{bars}</div>
+      <div><a class="btn light" href="realizacje.html">Zobacz realizacje</a></div>
     </div>
   </div>
-</section>""")
-
-svc_rows = "".join(f'<li><a href="oferta.html#{k}"><span class="code muted">{i:02d}</span><span class="d-l"><span class="hl">{n}</span></span><p class="muted">{d}</p><span class="ar" aria-hidden="true">&#8594;</span></a></li>' for i, (k, n, d) in enumerate(SERVICES, start=1))
-
-home = f"""<section class="hero" aria-labelledby="hero-h">
-  <img src="img/mnc-kotara.webp" srcset="img/mnc-kotara-s.webp 800w, img/mnc-kotara.webp 1400w" sizes="100vw" width="1400" height="1960" alt="{escape(IMG["mnc-kotara"][0])}" fetchpriority="high">
-  <div class="sweep" aria-hidden="true"></div>
-  <div class="wrap">
-    <h1 class="d-xl" id="hero-h">Wnętrza, które zostawiają ślad{mark()}</h1>
-    <div class="hero-bar">
-      <p class="lead">Pracownia projektowania wnętrz arch. wn. Wiolety Siemieniuk. Ciepły minimalizm z odwagą koloru.</p>
-      <span class="lbl">Białystok · Warszawa · zdalnie</span>
-      <a class="lnk" href="#projekty">Zobacz projekty</a>
-    </div>
-  </div>
+  <div class="hero-img">{slides}<div class="sweep" aria-hidden="true"></div></div>
 </section>
 
-<section class="intro" id="projekty"><div class="wrap g12">
-  <p class="lbl muted">Wybrane projekty</p>
-  <h2 class="d-l rv">Spokojna baza, naturalne materiały i jeden <em>odważny gest</em>: kolor, sztuka albo światło.</h2>
+<div class="marq" aria-hidden="true"><div class="track"><div class="grp">{grp}</div><div class="grp">{grp}</div></div></div>
+
+<section class="sec"><div class="wrap">
+  <div class="sec-h"><div><span class="lbl muted">Realizacje</span><h2 class="d-l rv">Wybrane projekty</h2></div><a class="lnk" href="realizacje.html">Wszystkie realizacje</a></div>
+  <div class="strip stag">{"".join(tile(p) for p in PROJECTS)}</div>
 </div></section>
 
-{"".join(chapters)}
-
-<section class="studio"><div class="wrap g12">
-  <figure class="pic mask">{pic("smuga-wioleta", "r-4-5", "(max-width: 1080px) 100vw, 40vw")}<figcaption class="small muted"><span>arch. wn. Wioleta Siemieniuk</span><span>Założycielka</span></figcaption></figure>
-  <div class="txt">
-    <p class="lbl muted">Pracownia</p>
-    <h2 class="d-m rv">Smuga to ślad. Światła na podłodze, pędzla na ścianie, człowieka w przestrzeni.</h2>
-    <ul class="means stag">
-      <li><b>Światło</b><span class="muted">Projektuję od okna: gdzie pada słońce, tam zaczyna się wnętrze.</span></li>
-      <li><b>Kolor</b><span class="muted">Jeden odważny akcent zamiast dziesięciu bezpiecznych.</span></li>
-      <li><b>Materiał</b><span class="muted">Drewno, kamień, len i stal, które ładnie się starzeją.</span></li>
-      <li><b>Porządek</b><span class="muted">Każdy projekt ma swój kod i pełny opis, jak w katalogu.</span></li>
-    </ul>
-    <p style="margin-top:32px"><a class="lnk" href="o-mnie.html">Poznaj pracownię</a></p>
+<section class="feat"><div class="wrap g12">
+  <div class="txt stag">
+    <p class="lbl">Wyróżniona realizacja</p>
+    <h2 class="d-l">{mnc["title"]}</h2>
+    <p class="lead">{mnc["lead"]}</p>
+    <dl class="facts"><div><dt class="lbl">Typ</dt><dd>{mnc["typ"]}</dd></div><div><dt class="lbl">Miasto</dt><dd>{mnc["lok"]}</dd></div><div><dt class="lbl">Rok</dt><dd>{mnc["rok"]}</dd></div></dl>
+    <a class="btn" href="projekt-mnc-concept.html">Zobacz realizację</a>
+  </div>
+  <div class="col">
+    <a class="a mask" href="projekt-mnc-concept.html" tabindex="-1" aria-hidden="true">{pic("mnc-lada", "r-4-5", "(max-width: 1080px) 60vw, 33vw")}</a>
+    <a class="b mask" href="projekt-mnc-concept.html" tabindex="-1" aria-hidden="true">{pic("mnc-bar", "r-3-4", "(max-width: 1080px) 40vw, 25vw")}</a>
+    <a class="c mask" href="projekt-mnc-concept.html" tabindex="-1" aria-hidden="true">{pic("mnc-wejscie", "r-5-4", "(max-width: 1080px) 50vw, 25vw")}</a>
   </div>
 </div></section>
 
-<section class="svc"><div class="wrap">
-  <div class="svc-head g12"><p class="lbl muted">Co projektuję</p><p class="lead">Od jednej konsultacji po kompletny projekt z nadzorem nad realizacją.</p></div>
-  <ul class="svc-list">{svc_rows}</ul>
+<section class="sec"><div class="wrap">
+  <div class="mos-h"><h2 class="d-l rv">Detale, od których zaczyna się wnętrze</h2><p class="lead muted">Rysunek drewna, łuk przejścia, kolor kotary. Wybieram je tak, żeby wnętrze było rozpoznawalne po jednym kadrze.</p></div>
+  <div class="mos stag">{mos}</div>
 </div></section>
 
-{process()}
+<section class="me"><div class="wrap g12">
+  <figure class="pic mask">{pic("smuga-wioleta", "r-5-4", "(max-width: 860px) 100vw, 40vw")}</figure>
+  <div class="txt stag">
+    <p class="lbl muted">O mnie</p>
+    <h2 class="d-m">Smuga to ślad. Światła na podłodze, pędzla na ścianie, człowieka w przestrzeni.</h2>
+    <p class="lead">Spokojną bazę z drewna, kamienia i lnu łączę z jednym odważnym gestem: kolorem albo sztuką. Prowadzę projekt od pierwszej rozmowy do sesji zdjęciowej gotowego wnętrza.</p>
+    <div class="sig"><span>arch. wn. Wioleta Siemieniuk</span><a class="lnk" href="o-mnie.html">Poznaj pracownię</a></div>
+  </div>
+</div></section>
+
 {cta()}"""
-page("index.html", "Smuga Design · projektowanie wnętrz Białystok", "Pracownia projektowania wnętrz arch. wn. Wiolety Siemieniuk. Realizacje i wizualizacje domów, mieszkań i wnętrz komercyjnych. Białystok, Warszawa.", home, over=True)
+page("index.html", "Smuga Design · projektowanie wnętrz Białystok", "Pracownia projektowania wnętrz arch. wn. Wiolety Siemieniuk. Domy, mieszkania i wnętrza komercyjne. Białystok, Warszawa.", home)
 
 
-# LISTY
-def idx_row(p, i):
-    return (f'<a class="idx-row stag" href="projekt-{p["slug"]}.html"><span class="code muted num-c">{i:02d}</span>{pic(p["card"], "", "280px")}'
-            f'<span><span class="d-m">{escape(p["title"])}</span><span class="code muted" style="display:block;margin-top:8px">{p["code"]}</span></span>'
-            f'<span class="hide-t muted">{escape(p["typ"])}</span><span class="hide-t hide-m muted">{escape(p["lok"] or "")}</span><span class="end hide-m">{tag(p)}</span></a>')
-
-
-def listing(fname, h1, lead, items, soon=""):
-    sw = (f'<nav class="switch" aria-label="Rodzaj projektów"><a href="realizacje.html"{" aria-current=\"page\"" if fname == "realizacje.html" else ""}>Realizacje<sup>{len(REAL):02d}</sup></a>'
-          f'<a href="wizualizacje.html"{" aria-current=\"page\"" if fname == "wizualizacje.html" else ""}>Wizualizacje<sup>{len(VIZ):02d}</sup></a></nav>')
-    first = items[0]
-    big = f'<div class="idx-big"><a class="mask" href="projekt-{first["slug"]}.html" aria-label="{escape(first["title"])}">{pic(first["cover"] if first["status"] == "viz" else first["card"], "r-16-9", "100vw", True)}</a></div>'
-    rows = "".join(idx_row(p, i) for i, p in enumerate(items, start=1)) + soon
-    body = f"""<div class="ph-head"><div class="wrap">
-  <p class="crumbs"><a href="index.html">Start</a><span>/</span><span>{h1}</span></p>
-  <div class="g12"><h1 class="d-xl">{h1}</h1><p class="lead muted">{lead}</p></div>
+# REALIZACJE
+works = "".join(tile(p, "r-4-5" if i % 4 in (1, 2) else "r-5-4", "(max-width: 860px) 100vw, 58vw") for i, p in enumerate(PROJECTS))
+real = f"""<div class="ph-head"><div class="wrap">
+  <p class="crumbs"><a href="index.html">Start</a><span>/</span><span>Realizacje</span></p>
+  <div class="g12"><h1 class="d-xl">Realizacje</h1><p class="lead muted">Domy, mieszkania i wnętrza komercyjne. Każdy projekt z opisem i pełną galerią.</p></div>
 </div></div>
-<div class="wrap">{sw}{big}</div>
-<section class="idx"><div class="wrap">{rows}</div></section>
+<section><div class="wrap works">{works}</div></section>
 {cta()}"""
-    page(fname, f"{h1} · Smuga Design", lead, body, fname)
+page("realizacje.html", "Realizacje · Smuga Design", "Realizacje pracowni Smuga Design: domy, mieszkania, wnętrza komercyjne.", real, "realizacje.html")
 
 
-soon_row = f'<div class="idx-row soon"><span class="code num-c">+</span><div class="ph">{mark()}</div><span><span class="d-m">Kolejne sesje w przygotowaniu</span><span class="small" style="display:block;margin-top:8px">Zrealizowane wizualizacje trafią tutaj ze zdjęciami z sesji, pod tym samym adresem.</span></span></div>'
-listing("realizacje.html", "Realizacje", "Wnętrza wykonane i sfotografowane po zakończeniu prac. Każdy projekt z pełną metryczką.", REAL, soon_row)
-listing("wizualizacje.html", "Wizualizacje", "Projekty pokazane w wizualizacjach. Każde zdjęcie w tej zakładce to wizualizacja, nie fotografia.", VIZ)
-
-
-# STRONY PROJEKTÓW
+# STRONY REALIZACJI
 order = [p["slug"] for p in PROJECTS]
-for p in PROJECTS:
-    nxt = BY[order[(order.index(p["slug"]) + 1) % len(order)]]
-    blocks = "".join(f"<div><h2>{a}</h2><p>{b}</p></div>" for a, b in p["blocks"])
-    shots = [p["cover"]] + p["gallery"]
-    data = "".join(f'<span hidden data-shot="img/{n}.webp" data-alt="{escape(IMG[n][0])}"></span>' for n in shots)
-    has_gal = bool(p["gallery"])
-    if has_gal:
-        figs = []
-        layout = ["full", "", "off", "full", "", "off"]
-        for i, name in enumerate(p["gallery"], start=1):
-            cls = layout[(i - 1) % len(layout)]
-            ratio = "r-3-2" if cls == "full" else "r-4-5"
-            figs.append(f'<figure class="{cls} mask"><button type="button" data-open="{i}" aria-label="Powiększ zdjęcie {i + 1} z {len(shots)}">{pic(name, ratio, "(max-width: 1080px) 100vw, 60vw")}</button><figcaption><b>{i + 1:02d}</b><span>{escape(IMG[name][0].split(",")[0])}</span></figcaption></figure>')
-            if i == 3:
-                figs.append(f'<blockquote class="d-m rv">"{p["blocks"][2][1]}"</blockquote>')
-        right = f'<div class="p-gal">{"".join(figs)}</div>'
-    else:
-        right = f'<div class="p-note"><p class="lbl muted">Galeria</p><p class="d-s">Pełna galeria wizualizacji pojawi się tutaj po przekazaniu materiałów.</p><p class="muted">W demo pokazujemy okładkę projektu z Behance. Gdy wnętrze zostanie wykonane, nad galerią pojawi się przełącznik „Zdjęcia z realizacji | Wizualizacje”.</p></div>'
-    hero = pic(p["cover"], "", "100vw", True)
-    hero = f'<button type="button" data-open="0" aria-label="Powiększ zdjęcie główne">{hero}</button>' if has_gal else hero
-    lb = """<div class="lb" role="dialog" aria-modal="true" aria-label="Podgląd zdjęć">
-  <div class="lb-top"><span class="lb-count code"></span><button type="button" class="close">Zamknij</button></div>
+LB = """<div class="lb" role="dialog" aria-modal="true" aria-label="Podgląd zdjęć">
+  <div class="lb-top"><span class="lb-count lbl"></span><button type="button" class="close">Zamknij</button></div>
   <div class="lb-stage"><img src="" alt=""></div>
   <div class="lb-bot"><span class="lb-cap small"></span></div>
   <button type="button" class="prev" aria-label="Poprzednie zdjęcie">&#8592;</button><button type="button" class="nextb" aria-label="Następne zdjęcie">&#8594;</button>
-</div>""" if has_gal else ""
-    listpage = "realizacje.html" if p["status"] == "real" else "wizualizacje.html"
+</div>"""
+for p in PROJECTS:
+    others = [BY[s] for s in order if s != p["slug"]][:3]
+    blocks = "".join(f"<div><h2>{a}</h2><p>{b}</p></div>" for a, b in p["blocks"])
+    gal_imgs = p["gallery"] or p["details"]
+    shots = [p["cover"]] + gal_imgs
+    data = "".join(f'<span hidden data-shot="img/{n}.webp" data-alt="{escape(IMG[n][0])}"></span>' for n in shots)
+    figs = []
+    if p["gallery"]:
+        layout = ["full", "", "off", "full", "", "off"]
+        for i, name in enumerate(gal_imgs, start=1):
+            cls = layout[(i - 1) % len(layout)]
+            figs.append(f'<figure class="{cls} mask"><button type="button" data-open="{i}" aria-label="Powiększ zdjęcie {i + 1} z {len(shots)}">{pic(name, "r-3-2" if cls == "full" else "r-4-5", "(max-width: 1080px) 100vw, 60vw")}</button><figcaption>{escape(IMG[name][0].split(",")[0])}</figcaption></figure>')
+            if i == 3:
+                figs.append(f'<blockquote class="d-m rv">"{p["blocks"][2][1]}"</blockquote>')
+        gal = f'<div class="p-gal">{"".join(figs)}</div>'
+    else:
+        for i, name in enumerate(gal_imgs, start=1):
+            figs.append(f'<figure class="mask"><button type="button" data-open="{i}" aria-label="Powiększ zdjęcie {i + 1} z {len(shots)}">{pic(name, "r-3-4", "(max-width: 1080px) 100vw, 20vw")}</button><figcaption>{escape(IMG[name][0].split(",")[0])}</figcaption></figure>')
+        gal = f'<div class="p-gal three">{"".join(figs)}<blockquote class="d-m rv">"{p["blocks"][2][1]}"</blockquote></div>'
+    facts = "".join(f'<div><span class="lbl muted">{k}</span><span>{escape(v)}</span></div>' for k, v in (("Typ", p["typ"]), ("Lokalizacja", p["lok"]), ("Rok", p["rok"]), ("Zakres", "Projekt wnętrza")) if v)
     body = f"""<div class="p-top"><div class="wrap">
-  <div class="row"><p class="crumbs"><a href="index.html">Start</a><span>/</span><a href="{listpage}">{"Realizacje" if p["status"] == "real" else "Wizualizacje"}</a><span>/</span><span>{p["short"]}</span></p><span class="code">{p["code"]}</span></div>
-  <h1 class="d-xl">{escape(p["title"])}</h1>
+  <p class="crumbs"><a href="index.html">Start</a><span>/</span><a href="realizacje.html">Realizacje</a><span>/</span><span>{p["short"]}</span></p>
+  <div class="g12"><h1 class="d-xl">{escape(p["title"])}</h1><div class="facts-top">{facts}</div></div>
 </div></div>
-<div class="p-hero"><div class="wrap mask in">{hero}</div></div>
+<div class="p-hero"><div class="wrap"><button type="button" data-open="0" aria-label="Powiększ zdjęcie główne">{pic(p["cover"], "", "100vw", True)}</button></div></div>
 <section class="p-body"><div class="wrap g12">
-  <aside class="p-side">
-    <div>{tag(p)}</div>
-    <p class="lead">{p["lead"]}</p>
-    <dl class="facts">{facts(p, ("Kod", "Typ", "Lokalizacja", "Rok", "Status"))}</dl>
-    <div class="blocks">{blocks}</div>
-  </aside>
-  {right}
+  <aside class="p-side"><p class="lead">{p["lead"]}</p><div class="blocks">{blocks}</div><a class="lnk" href="kontakt.html">Chcę podobne wnętrze</a></aside>
+  {gal}
 </div></section>
 {data}
-<a class="next-chap{" chap " + nxt["field"] if nxt["field"] else ""}" href="projekt-{nxt["slug"]}.html"><div class="wrap g12">
-  <div class="txt"><p class="lbl">Następny projekt</p><h2 class="d-l">{escape(nxt["title"])}</h2><span class="code">{nxt["code"]} · {status_name(nxt)}</span></div>
-  {pic(nxt["card"], "r-3-2", "(max-width: 860px) 100vw, 58vw")}
-</div></a>
-{lb}
+<section class="more-w"><div class="wrap">
+  <div class="sec-h"><div><span class="lbl muted">Zobacz też</span><h2 class="d-m">Inne realizacje</h2></div><a class="lnk" href="realizacje.html">Wszystkie realizacje</a></div>
+  <div class="strip stag" style="grid-template-columns:repeat(3,minmax(0,1fr))">{"".join(tile(o, "r-5-4", "(max-width: 860px) 50vw, 33vw") for o in others)}</div>
+</div></section>
+{LB}
 {cta()}"""
-    page(f"projekt-{p['slug']}.html", f"{p['title']} · {status_name(p)} · Smuga Design", p["lead"], body, listpage, og=p["cover"])
+    page(f"projekt-{p['slug']}.html", f"{p['title']} · Realizacje · Smuga Design", p["lead"], body, "realizacje.html", og=p["cover"])
 
 
 # OFERTA (bez cen)
@@ -293,24 +268,27 @@ SVC_DETAIL = {
     "wizualizacje": ("Realistyczne obrazy wnętrza, które pomagają podjąć decyzje, zanim zaczną się wydatki.", ["wizualizacje projektów własnych", "warianty kolorów i materiałów", "obrazy do sprzedaży nieruchomości"]),
     "konsultacje": ("Jedno spotkanie w Twoim wnętrzu i konkretny kierunek zmian do zrobienia samodzielnie.", ["kierunek kolorów i materiałów", "lista zmian krok po kroku", "spotkanie na miejscu albo online"]),
 }
-det = "".join(f'<details id="{k}"{" open" if i == 1 else ""}><summary><span class="code muted">{i:02d}</span><span class="d-l">{n}</span></summary><div class="body"><p class="lead">{SVC_DETAIL[k][0]}</p><ul>{"".join(f"<li>{x}</li>" for x in SVC_DETAIL[k][1])}</ul></div></details>' for i, (k, n, _d) in enumerate(SERVICES, start=1))
+svc = "".join(f'<section class="svc" id="{k}"><span class="n">{i:02d}</span><div class="t rv"><h2 class="d-l">{n}</h2><p class="lead">{SVC_DETAIL[k][0]}</p></div><ul class="stag">{"".join(f"<li>{x}</li>" for x in SVC_DETAIL[k][1])}</ul><div class="mask">{pic(img, "r-4-5", "(max-width: 860px) 100vw, 25vw")}</div></section>' for i, (k, n, _d, img) in enumerate(SERVICES, start=1))
 FAQ = [
     ("Od czego zaczynamy?", "Od rozmowy. Opowiadasz o wnętrzu i o tym, jak chcesz w nim żyć, a ja proponuję zakres i termin."),
-    ("Jak wyceniasz projekt?", "Indywidualnie, po rozmowie i obejrzeniu wnętrza. Wycena zależy od metrażu i zakresu, a otrzymujesz ją na piśmie przed startem."),
+    ("Jak wyceniasz projekt?", "Indywidualnie, po rozmowie i obejrzeniu wnętrza. Wycena zależy od metrażu i zakresu, a dostajesz ją na piśmie przed startem."),
     ("Ile trwa projekt?", "Koncepcja dla mieszkania to zwykle kilka tygodni, projekt kompleksowy kilka miesięcy. Termin ustalamy na starcie."),
     ("Czy pracujesz zdalnie?", "Tak. Pomiar i spotkania mogą odbywać się online, a materiały wysyłam w formie cyfrowej."),
     ("Co dostaję na koniec?", "Wizualizacje, rysunki wykonawcze dla ekip i listę materiałów, zależnie od zakresu. Przy realizacji jestem z Tobą do końca."),
 ]
-faq_html = "".join(f"<details><summary>{q}</summary><p>{a}</p></details>" for q, a in FAQ)
+steps = "".join(f"<li><b>{a}</b><p class=\"muted\">{b}</p></li>" for a, b in STEPS)
 oferta = f"""<div class="ph-head"><div class="wrap">
   <p class="crumbs"><a href="index.html">Start</a><span>/</span><span>Oferta</span></p>
-  <div class="g12"><h1 class="d-xl">Co projektuję</h1><p class="lead muted">Od jednej konsultacji po kompletny projekt z wizualizacjami i wsparciem przy realizacji. Każdą współpracę wyceniam indywidualnie.</p></div>
+  <div class="g12"><h1 class="d-xl">Oferta</h1><p class="lead muted">Od jednej konsultacji po kompletny projekt z wizualizacjami i wsparciem przy realizacji. Każdą współpracę wyceniam indywidualnie.</p></div>
 </div></div>
-<section class="svc-detail"><div class="wrap">{det}</div></section>
-{process()}
-<section class="svc"><div class="wrap g12">
-  <div style="grid-column:1/5"><p class="lbl muted">Pytania</p><h2 class="d-m rv" style="margin-top:16px">Najczęściej słyszę</h2></div>
-  <div class="faq">{faq_html}</div>
+<div class="wrap">{svc}</div>
+<section class="proc" style="margin-top:96px"><div class="wrap">
+  <div class="head g12"><p class="lbl">Jak pracuję</p><h2 class="d-m rv">Pięć kroków od pierwszej rozmowy do gotowego wnętrza</h2></div>
+  <ol class="stag">{steps}</ol>
+</div></section>
+<section class="faq-w"><div class="wrap g12">
+  <div class="head"><p class="lbl muted">Pytania</p><h2 class="d-m rv" style="margin-top:16px">Najczęściej słyszę</h2></div>
+  <div class="faq">{"".join(f"<details><summary>{q}</summary><p>{a}</p></details>" for q, a in FAQ)}</div>
 </div></section>
 {cta()}"""
 page("oferta.html", "Oferta · projektowanie wnętrz · Smuga Design", "Mieszkania, domy, wnętrza komercyjne, wizualizacje i konsultacje. Proces współpracy i najczęstsze pytania.", oferta, "oferta.html")
@@ -321,22 +299,20 @@ omnie = f"""<div class="ph-head"><div class="wrap">
   <p class="crumbs"><a href="index.html">Start</a><span>/</span><span>O mnie</span></p>
   <div class="g12"><h1 class="d-xl">Wioleta Siemieniuk</h1><p class="lead muted">Architektka wnętrz, założycielka Smuga Design.</p></div>
 </div></div>
-<section class="studio" style="padding-top:32px"><div class="wrap g12">
-  <figure class="pic mask in">{pic("smuga-wioleta", "r-4-5", "(max-width: 1080px) 100vw, 40vw", True)}<figcaption class="small muted"><span>Białystok · Warszawa</span><span>@smuga_design</span></figcaption></figure>
-  <div class="txt">
+<section class="me"><div class="wrap g12">
+  <figure class="pic mask">{pic("smuga-wioleta", "r-5-4", "(max-width: 860px) 100vw, 40vw", True)}</figure>
+  <div class="txt stag">
     <p class="lbl muted">Podejście</p>
-    <h2 class="d-m rv">Spokojna baza i jeden odważny gest.</h2>
-    <p class="lead" style="margin-bottom:24px">Lubię naturalne materiały: drewno, kamień, len. Na nich buduję wnętrza, w których jest miejsce na kolor i sztukę.</p>
-    <p class="muted">Każdy projekt dostaje swój kod, jak w katalogu. Dzięki temu łatwo wrócić do decyzji, materiałów i zdjęć, także po latach. Tekst do uzupełnienia o wykształcenie, doświadczenie i publikacje.</p>
-    <ul class="means stag" style="margin-top:40px">
-      <li><b>Światło</b><span class="muted">Projektuję od okna.</span></li>
-      <li><b>Kolor</b><span class="muted">Jeden akcent zamiast dziesięciu.</span></li>
-      <li><b>Materiał</b><span class="muted">Takie, które ładnie się starzeją.</span></li>
-      <li><b>Porządek</b><span class="muted">Kod i opis każdego projektu.</span></li>
-    </ul>
+    <h2 class="d-m">Spokojna baza i jeden odważny gest.</h2>
+    <p class="lead">Lubię naturalne materiały: drewno, kamień, len. Na nich buduję wnętrza, w których jest miejsce na kolor i sztukę.</p>
+    <p class="muted">Projektuję od okna: gdzie pada światło, tam zaczyna się wnętrze. Tekst do uzupełnienia o wykształcenie, doświadczenie i publikacje.</p>
+    <div class="sig"><a href="{IG}" rel="noopener">Instagram @smuga_design</a><a href="{BEHANCE}" rel="noopener">Behance</a></div>
   </div>
 </div></section>
-{process()}
+<section class="sec"><div class="wrap">
+  <div class="mos-h"><h2 class="d-l rv">Z pracowni</h2><p class="lead muted">Detale z projektów, nad którymi pracowałam.</p></div>
+  <div class="mos stag">{mos}</div>
+</div></section>
 {cta()}"""
 page("o-mnie.html", "O mnie · Wioleta Siemieniuk · Smuga Design", "Arch. wn. Wioleta Siemieniuk, Smuga Design. Ciepły minimalizm z odwagą koloru.", omnie, "o-mnie.html", og="smuga-wioleta")
 
@@ -362,7 +338,7 @@ kontakt = f"""<div class="ph-head"><div class="wrap">
     <label>Rodzaj wnętrza<select name="typ" required><option value="">Wybierz</option>{opts(["Mieszkanie", "Dom", "Wnętrze komercyjne", "Inne"])}</select></label>
     <label>Lokalizacja<input name="miasto" placeholder="np. Białystok"></label>
     <label>Metraż (m²)<input name="metraz" inputmode="numeric" placeholder="np. 65"></label>
-    <label>Zakres<select name="zakres"><option value="">Wybierz</option>{opts(["Konsultacja", "Projekt koncepcyjny", "Projekt kompleksowy", "Jeszcze nie wiem"])}</select></label>
+    <label>Zakres<select name="zakres"><option value="">Wybierz</option>{opts([n for _k, n, _d, _i in SERVICES] + ["Jeszcze nie wiem"])}</select></label>
     <label>Kiedy chcesz zacząć<select name="termin"><option value="">Wybierz</option>{opts(["Jak najszybciej", "W ciągu 3 miesięcy", "Za 3-6 miesięcy", "Później"])}</select></label>
     <label class="full">Wiadomość<textarea name="wiadomosc" placeholder="Co chcesz zmienić? Co lubisz, czego nie?"></textarea></label>
     <label class="full">Rzut lub zdjęcia (opcjonalnie)<input type="file" name="pliki" multiple accept=".pdf,.jpg,.jpeg,.png"></label>
