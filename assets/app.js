@@ -1,19 +1,23 @@
-// Smuga Design - demo v3: loader, megamenu, hero z przenikaniem, szuflada, wejścia, podgląd zdjęć, formularz.
+// Smuga Design - demo v4: loader, megamenu, hero z przenikaniem, szuflada, wejścia, podgląd zdjęć, formularz.
 const root = document.documentElement;
 root.classList.add('js');
 const still = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-// loader: raz na sesję, potem kurtyna w górę i start hero
+// loader: raz na sesję, licznik 0-100, kurtyna z falą w górę i start hero
 const loader = document.querySelector('.loader');
 const start = () => root.classList.add('go');
 if (root.classList.contains('ld') && loader && !still) {
+  const num = loader.querySelector('.meta b');
+  const t0 = performance.now();
+  const tick = (t) => { const k = Math.min(1, (t - t0) / 1600); num.textContent = String(Math.round(k * 100)).padStart(3, '0'); if (k < 1) requestAnimationFrame(tick); };
+  requestAnimationFrame(tick);
   const done = () => {
     loader.classList.add('out');
-    start();
-    loader.addEventListener('transitionend', () => { root.classList.remove('ld'); loader.remove(); }, { once: true });
+    setTimeout(start, 300);
+    loader.addEventListener('transitionend', (e) => { if (e.target !== loader) return; root.classList.remove('ld'); loader.remove(); });
     try { sessionStorage.setItem('smuga-ld', '1'); } catch (e) { /* tryb prywatny */ }
   };
-  Promise.all([document.fonts ? document.fonts.ready : Promise.resolve(), new Promise((r) => setTimeout(r, 1500))]).then(done);
+  Promise.all([document.fonts ? document.fonts.ready : Promise.resolve(), new Promise((r) => setTimeout(r, 1700))]).then(done);
 } else {
   root.classList.remove('ld');
   if (loader) loader.remove();
@@ -125,12 +129,40 @@ if (lb) {
   lb.addEventListener('touchend', (e) => { if (x0 === null) return; const dx = e.changedTouches[0].clientX - x0; if (Math.abs(dx) > 48) show(cur + (dx < 0 ? 1 : -1)); x0 = null; });
 }
 
-const form = document.querySelector('.form');
-if (form) {
+document.querySelectorAll('.form').forEach((form) => {
   form.addEventListener('submit', (e) => {
     e.preventDefault();
     if (!form.reportValidity()) return;
     const ok = form.querySelector('.form-ok');
     ok.hidden = false; ok.focus();
   });
+});
+
+// modal "Umów rozmowę": natywny dialog (fokus w środku, Esc), zamykanie klikiem w tło
+const dlg = document.querySelector('.dlg');
+if (dlg) {
+  let opener = null;
+  document.querySelectorAll('[data-modal]').forEach((b) => b.addEventListener('click', (e) => { e.preventDefault(); opener = b; dlg.showModal(); }));
+  dlg.querySelector('.x').addEventListener('click', () => dlg.close());
+  dlg.addEventListener('click', (e) => { if (e.target === dlg) dlg.close(); });
+  dlg.addEventListener('close', () => { if (opener) opener.focus(); });
 }
+
+// przycisk telefonu na telefonie: pojawia się po zjechaniu w dół
+const fab = document.querySelector('.fab');
+if (fab) {
+  const onFab = () => fab.classList.toggle('show', window.scrollY > 480);
+  window.addEventListener('scroll', onFab, { passive: true });
+  onFab();
+}
+
+// pole plików: przeciągnij i upuść, lista wybranych plików
+document.querySelectorAll('.drop').forEach((drop) => {
+  const input = drop.querySelector('input');
+  const list = drop.parentElement.querySelector('.files');
+  const show = () => { list.innerHTML = [...input.files].map((f) => `<li>${f.name.replace(/[<>&]/g, '')}</li>`).join(''); };
+  input.addEventListener('change', show);
+  ['dragenter', 'dragover'].forEach((ev) => drop.addEventListener(ev, (e) => { e.preventDefault(); drop.classList.add('over'); }));
+  ['dragleave', 'drop'].forEach((ev) => drop.addEventListener(ev, () => drop.classList.remove('over')));
+  drop.addEventListener('drop', (e) => { e.preventDefault(); input.files = e.dataTransfer.files; show(); });
+});

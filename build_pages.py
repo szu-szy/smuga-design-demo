@@ -1,7 +1,7 @@
 """Szablony stron demo Smuga Design v3. Dane w build_head.py. Uruchom: python3 build.py"""
 from build_head import *  # noqa: F401,F403 - dane projektów, zdjęć i kontaktu
 
-V = "4"
+V = "5"
 STREAK_PATH = "M12 60C14 44 30 38 54 32C76 26 86 20 88 4H108C108 24 92 36 64 42C42 47 32 50 32 60Z"
 DRAW_PATH = "M22 58C24 46 36 40 58 35C80 30 96 22 98 6"
 SERVICES = [
@@ -18,6 +18,20 @@ STEPS = [
     ("Projekt wykonawczy", "Rysunki dla ekip, dobór materiałów i zestawienie."),
     ("Realizacja", "Jestem przy wyborach na budowie, aż do sesji zdjęciowej."),
 ]
+
+
+ICO = {
+    "tel": '<svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C10.6 21 3 13.4 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1z"/></svg>',
+    "mail": '<svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2zm0 4-8 5-8-5V6l8 5 8-5z"/></svg>',
+    "ig": '<svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 7a5 5 0 1 0 0 10 5 5 0 0 0 0-10zm0 8a3 3 0 1 1 0-6 3 3 0 0 1 0 6zm5-9a1 1 0 1 0 0 2 1 1 0 0 0 0-2zM16 2H8a6 6 0 0 0-6 6v8a6 6 0 0 0 6 6h8a6 6 0 0 0 6-6V8a6 6 0 0 0-6-6zm4 14a4 4 0 0 1-4 4H8a4 4 0 0 1-4-4V8a4 4 0 0 1 4-4h8a4 4 0 0 1 4 4z"/></svg>',
+    "pin": '<svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a7 7 0 0 0-7 7c0 5 7 13 7 13s7-8 7-13a7 7 0 0 0-7-7zm0 10a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"/></svg>',
+    "up": '<svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M11 16V7.8l-3.6 3.6L6 10l6-6 6 6-1.4 1.4L13 7.8V16zm-7 4v-2h16v2z"/></svg>',
+}
+WAVE = '<svg class="wave" viewBox="0 0 1440 48" preserveAspectRatio="none" aria-hidden="true"><path d="M0 44C360 44 480 4 720 24S1080 44 1440 4"/></svg>'
+
+
+def wave_sec():
+    return f'<div class="wave-sec rv"><div class="wrap">{WAVE}</div></div>'
 
 
 def mark(cls="streak"):
@@ -50,7 +64,9 @@ def header(current):
     <a class="logo" href="index.html" aria-label="Smuga Design, strona główna">{mark()}SMUGA</a>
     <nav class="nav r" aria-label="Pracownia">
       <a href="o-mnie.html"{ac("o-mnie.html")}>O mnie</a>
-      <a class="cta-s" href="kontakt.html"{ac("kontakt.html")}>Kontakt</a>
+      <a href="kontakt.html"{ac("kontakt.html")}>Kontakt</a>
+      <a class="tel" href="tel:{PHONE_HREF}" aria-label="Zadzwoń {PHONE}">{ICO["tel"]}<span>604 762 946</span></a>
+      <a class="cta-s" href="kontakt.html" data-modal>Umów rozmowę</a>
     </nav>
     <button class="burger" type="button" aria-expanded="false" aria-controls="drawer"><span>Menu</span><i aria-hidden="true"></i></button>
   </div>
@@ -66,20 +82,44 @@ def header(current):
 
 
 def footer():
-    links = [("realizacje.html", "Realizacje"), ("oferta.html", "Oferta"), ("o-mnie.html", "O mnie"), ("kontakt.html", "Kontakt")]
     return f"""<footer class="ftr">
-  <div class="wrap g12">
-    <div class="mk">{mark()}</div>
-    <div class="col"><b>Smuga Design</b><span>Projektowanie wnętrz</span><span>arch. wn. Wioleta Siemieniuk</span></div>
-    <div class="col"><b>Kontakt</b><a href="tel:{PHONE_HREF}">{PHONE}</a><a href="mailto:{EMAIL}">{EMAIL}</a></div>
-    <div class="col"><b>Social media</b><a href="{IG}" rel="noopener">@smuga_design</a><a href="{BEHANCE}" rel="noopener">Behance</a></div>
+  <div class="wrap">
+    <div class="top">
+      <div class="intro"><p class="d-s">Projektuję wnętrza, które zostawiają ślad. Białystok, Warszawa i zdalnie.</p><a class="btn light" href="kontakt.html" data-modal>Umów rozmowę</a></div>
+      <div class="col"><p class="lbl">Strona</p><a href="realizacje.html">Realizacje</a><a href="oferta.html">Oferta</a><a href="o-mnie.html">O mnie</a><a href="kontakt.html">Kontakt</a></div>
+      <div class="col"><p class="lbl">Oferta</p>{"".join(f'<a href="oferta.html#{k}">{n}</a>' for k, n, _d, _i in SERVICES)}</div>
+      <div class="col w3"><p class="lbl">Kontakt</p><a href="tel:{PHONE_HREF}">{ICO["tel"]}{PHONE}</a><a href="mailto:{EMAIL}">{ICO["mail"]}{EMAIL}</a><a href="{IG}" rel="noopener">{ICO["ig"]}@smuga_design</a><span style="display:inline-flex;gap:8px;align-items:center">{ICO["pin"]}Białystok</span></div>
+    </div>
     <p class="mark" aria-hidden="true">SMUGA DESIGN</p>
-    <div class="bottom"><span>© 2026 Smuga Design · Białystok</span><span>{" · ".join(f'<a href="{h}">{t}</a>' for h, t in links)}</span><span>Demo projektu strony · Impact Agencja</span></div>
+    <div class="bottom"><span>© 2026 Smuga Design · arch. wn. Wioleta Siemieniuk</span><a href="{BEHANCE}" rel="noopener">Behance</a><span>Demo projektu strony · Impact Agencja</span></div>
   </div>
-</footer>"""
+</footer>
+<a class="fab" href="tel:{PHONE_HREF}" aria-label="Zadzwoń {PHONE}">{ICO["tel"]}</a>"""
 
 
-LOADER = f"""<div class="loader" aria-hidden="true"><svg viewBox="0 0 120 64"><path d="{DRAW_PATH}"/></svg><div class="word">{"".join(f'<span style="animation-delay:{300 + i * 40}ms">{"&nbsp;" if c == " " else c}</span>' for i, c in enumerate("SMUGA DESIGN"))}</div><div class="bar"><i></i></div></div>"""
+LOADER = f"""<div class="loader" aria-hidden="true"><svg class="mk" viewBox="0 0 120 64"><path d="{DRAW_PATH}"/></svg><div class="word">{"".join(f'<span style="animation-delay:{500 + i * 50}ms">{"&nbsp;" if c == " " else c}</span>' for i, c in enumerate("SMUGA DESIGN"))}</div><div class="meta"><span>Projektowanie wnętrz</span><b>000</b></div></div>"""
+
+
+def modal():
+    pills = "".join(f'<label><input type="radio" name="typ" value="{t}"{" required" if i == 0 else ""}><span>{t}</span></label>' for i, t in enumerate(["Mieszkanie", "Dom", "Lokal"]))
+    return f"""<dialog class="dlg" aria-labelledby="dlg-h">
+  <button class="x" type="button" aria-label="Zamknij">&#10005;</button>
+  <div class="in">
+    <div class="l"><div><p class="lbl w">Umów rozmowę</p><h2 class="d-m" id="dlg-h" style="margin-top:16px">Porozmawiajmy o Twoim wnętrzu</h2></div><div style="display:grid;gap:8px;position:relative;z-index:1"><a href="tel:{PHONE_HREF}">{ICO["tel"]}{PHONE}</a><a href="mailto:{EMAIL}">{ICO["mail"]}{EMAIL}</a></div>{mark()}</div>
+    <div class="r">
+      <p class="lead">Zostaw kontakt, oddzwonię i umówimy pierwszą rozmowę.</p>
+      <form class="form" novalidate>
+        <label>Imię<input name="imie" autocomplete="given-name" required></label>
+        <label>Telefon<input type="tel" name="tel" autocomplete="tel" required></label>
+        <fieldset class="full"><legend>Rodzaj wnętrza</legend><div class="pills">{pills}</div></fieldset>
+        <label class="full">Krótko o wnętrzu<textarea name="wiadomosc" placeholder="np. mieszkanie 60 m², chcę zmienić kuchnię i salon"></textarea></label>
+        <label class="consent full"><input type="checkbox" required> Zgadzam się na kontakt w sprawie zapytania.</label>
+        <div class="send full"><button class="btn" type="submit">Wyślij</button></div>
+        <p class="form-ok" hidden tabindex="-1">{mark()}To jest demo: formularz niczego nie wysyła.</p>
+      </form>
+    </div>
+  </div>
+</dialog>"""
 
 
 def page(fname, title, desc, body, current="", og="mnc-kotara"):
@@ -110,6 +150,7 @@ def page(fname, title, desc, body, current="", og="mnc-kotara"):
 {body}
 </main>
 {footer()}
+{modal()}
 <script src="assets/app.js?v={V}" defer></script>
 </body>
 </html>
@@ -118,13 +159,13 @@ def page(fname, title, desc, body, current="", og="mnc-kotara"):
 
 
 def cta():
-    return f"""<section class="cta" aria-labelledby="cta-h">
+    return f"""<section class="cta wtop pink" aria-labelledby="cta-h">
   <div class="wrap">
-    <h2 class="d-xxl rv" id="cta-h">Porozmawiajmy</h2>
+    <div class="top"><h2 class="d-xxl rv" id="cta-h">Porozmawiajmy</h2>{mark()}</div>
     <div class="row stag">
       <p class="lead">O mieszkaniu, domu albo lokalu. Pierwsza rozmowa niczego nie zobowiązuje, a po niej wiesz, jak mogłoby wyglądać Twoje wnętrze.</p>
-      <div class="links"><a href="mailto:{EMAIL}">{EMAIL}</a><a href="tel:{PHONE_HREF}">{PHONE}</a></div>
-      <a class="btn" href="kontakt.html">Opisz swoje wnętrze</a>
+      <div class="links"><a href="tel:{PHONE_HREF}">{ICO["tel"]}{PHONE}</a><a href="mailto:{EMAIL}">{ICO["mail"]}{EMAIL}</a></div>
+      <a class="btn" href="kontakt.html" data-modal>Umów rozmowę</a>
     </div>
   </div>
 </section>"""
@@ -143,19 +184,19 @@ bars = "".join(f'<button type="button" aria-label="Pokaż zdjęcie {i + 1}"><i><
 words = ["Projektowanie wnętrz", "Mieszkania", "Domy", "Wnętrza komercyjne", "Białystok", "Warszawa"]
 grp = "".join(f"<span>{w}</span>{mark()}" for w in words)
 mnc = BY["mnc-concept"]
-mos_imgs = [("mnc-bar", "r-4-5"), ("wwa-zabudowa", "r-3-4"), ("dom-wyspa", "r-5-4"), ("show-fotel", "r-2-3"), ("show-regal", "r-2-3"), ("mnc-taras", "r-4-5"), ("wwa-grafiki", "r-2-3"), ("mnc-wejscie", "r-5-4")]
+det_imgs = ["mnc-bar", "dom-wyspa", "wwa-zabudowa", "show-luk", "mnc-lada", "show-regal", "dom-zabudowa", "wwa-mural"]
 slug_of = lambda n: "mnc-concept" if n.startswith("mnc") else {"wwa": "mieszkanie-warszawa", "dom": "dom-001", "sho": "showroom-spod-igly-i-nitki"}[n[:3]]
-mos = "".join(f'<a href="projekt-{slug_of(n)}.html">{pic(n, r, "(max-width: 860px) 50vw, 25vw")}<span>{escape(IMG[n][0])}</span></a>' for n, r in mos_imgs)
+det = "".join(f'<a href="projekt-{slug_of(n)}.html">{pic(n, "r-1-1", "(max-width: 1080px) 50vw, 25vw")}<span>{escape(IMG[n][0].split(",")[0])}</span></a>' for n in det_imgs)
 
 home = f"""<section class="hero" aria-labelledby="hero-h" style="--n:{len(SLIDES)}">
   <div class="hero-txt">
     {mark()}
-    <div><p class="lbl" style="margin-bottom:24px">Pracownia projektowania wnętrz</p><h1 class="d-xl" id="hero-h">Wnętrza, które zostawiają ślad</h1></div>
+    <div><p class="lbl w" style="margin-bottom:24px">Pracownia projektowania wnętrz</p><h1 class="d-xl" id="hero-h">Wnętrza, które zostawiają ślad</h1></div>
     <p class="lead">Ciepły minimalizm z odwagą koloru. Domy, mieszkania i lokale w Białymstoku, Warszawie i zdalnie.</p>
     <div class="hero-cap">
       <div class="now lbl"><span class="name">{SLIDES[0][1]}</span><span class="num">01 / {len(SLIDES):02d}</span></div>
       <div class="prog">{bars}</div>
-      <div><a class="btn light" href="realizacje.html">Zobacz realizacje</a></div>
+      <div style="display:flex;gap:16px;flex-wrap:wrap;align-items:center"><a class="btn light" href="realizacje.html">Zobacz realizacje</a><a class="lnk" href="kontakt.html" data-modal style="color:var(--white)">Umów rozmowę</a></div>
     </div>
   </div>
   <div class="hero-img">{slides}<div class="sweep" aria-hidden="true"></div></div>
@@ -164,13 +205,13 @@ home = f"""<section class="hero" aria-labelledby="hero-h" style="--n:{len(SLIDES
 <div class="marq" aria-hidden="true"><div class="track"><div class="grp">{grp}</div><div class="grp">{grp}</div></div></div>
 
 <section class="sec"><div class="wrap">
-  <div class="sec-h"><div><span class="lbl muted">Realizacje</span><h2 class="d-l rv">Wybrane projekty</h2></div><a class="lnk" href="realizacje.html">Wszystkie realizacje</a></div>
+  <div class="sec-h"><div><span class="lbl w muted">Realizacje</span><h2 class="d-l rv">Wybrane projekty</h2></div><a class="lnk" href="realizacje.html">Wszystkie realizacje</a></div>
   <div class="strip stag">{"".join(tile(p) for p in PROJECTS)}</div>
 </div></section>
 
-<section class="feat"><div class="wrap g12">
+<section class="feat wtop pink"><div class="wrap g12">
   <div class="txt stag">
-    <p class="lbl">Wyróżniona realizacja</p>
+    <p class="lbl w">Wyróżniona realizacja</p>
     <h2 class="d-l">{mnc["title"]}</h2>
     <p class="lead">{mnc["lead"]}</p>
     <dl class="facts"><div><dt class="lbl">Typ</dt><dd>{mnc["typ"]}</dd></div><div><dt class="lbl">Miasto</dt><dd>{mnc["lok"]}</dd></div><div><dt class="lbl">Rok</dt><dd>{mnc["rok"]}</dd></div></dl>
@@ -184,14 +225,14 @@ home = f"""<section class="hero" aria-labelledby="hero-h" style="--n:{len(SLIDES
 </div></section>
 
 <section class="sec"><div class="wrap">
-  <div class="mos-h"><h2 class="d-l rv">Detale, od których zaczyna się wnętrze</h2><p class="lead muted">Rysunek drewna, łuk przejścia, kolor kotary. Wybieram je tak, żeby wnętrze było rozpoznawalne po jednym kadrze.</p></div>
-  <div class="mos stag">{mos}</div>
+  <div class="det-h"><div><p class="lbl w muted">Detale</p><h2 class="d-l rv">Od detalu zaczyna się wnętrze</h2></div><p class="lead muted">Rysunek drewna, łuk przejścia, kolor kotary. Wybieram je tak, żeby wnętrze było rozpoznawalne po jednym kadrze.</p></div>
+  <div class="det stag">{det}</div>
 </div></section>
 
-<section class="me"><div class="wrap g12">
+<section class="me wtop soft"><div class="wrap g12">
   <figure class="pic mask">{pic("smuga-wioleta", "r-5-4", "(max-width: 860px) 100vw, 40vw")}</figure>
   <div class="txt stag">
-    <p class="lbl muted">O mnie</p>
+    <p class="lbl w muted">O mnie</p>
     <h2 class="d-m">Smuga to ślad. Światła na podłodze, pędzla na ścianie, człowieka w przestrzeni.</h2>
     <p class="lead">Spokojną bazę z drewna, kamienia i lnu łączę z jednym odważnym gestem: kolorem albo sztuką. Prowadzę projekt od pierwszej rozmowy do sesji zdjęciowej gotowego wnętrza.</p>
     <div class="sig"><span>arch. wn. Wioleta Siemieniuk</span><a class="lnk" href="o-mnie.html">Poznaj pracownię</a></div>
@@ -203,7 +244,7 @@ page("index.html", "Smuga Design · projektowanie wnętrz Białystok", "Pracowni
 
 
 # REALIZACJE
-works = "".join(tile(p, "r-4-5" if i % 4 in (1, 2) else "r-5-4", "(max-width: 860px) 100vw, 58vw") for i, p in enumerate(PROJECTS))
+works = "".join(tile(p, "r-5-4", "(max-width: 860px) 100vw, 50vw") for p in PROJECTS)
 real = f"""<div class="ph-head"><div class="wrap">
   <p class="crumbs"><a href="index.html">Start</a><span>/</span><span>Realizacje</span></p>
   <div class="g12"><h1 class="d-xl">Realizacje</h1><p class="lead muted">Domy, mieszkania i wnętrza komercyjne. Każdy projekt z opisem i pełną galerią.</p></div>
@@ -247,12 +288,13 @@ for p in PROJECTS:
 </div></div>
 <div class="p-hero"><div class="wrap"><button type="button" data-open="0" aria-label="Powiększ zdjęcie główne">{pic(p["cover"], "", "100vw", True)}</button></div></div>
 <section class="p-body"><div class="wrap g12">
-  <aside class="p-side"><p class="lead">{p["lead"]}</p><div class="blocks">{blocks}</div><a class="lnk" href="kontakt.html">Chcę podobne wnętrze</a></aside>
+  <aside class="p-side"><p class="lead">{p["lead"]}</p><div class="blocks">{blocks}</div><a class="btn" href="kontakt.html" data-modal>Chcę podobne wnętrze</a></aside>
   {gal}
 </div></section>
 {data}
-<section class="more-w"><div class="wrap">
-  <div class="sec-h"><div><span class="lbl muted">Zobacz też</span><h2 class="d-m">Inne realizacje</h2></div><a class="lnk" href="realizacje.html">Wszystkie realizacje</a></div>
+{wave_sec()}
+<section class="more-w" style="border-top:0;padding-top:48px"><div class="wrap">
+  <div class="sec-h"><div><span class="lbl w muted">Zobacz też</span><h2 class="d-m">Inne realizacje</h2></div><a class="lnk" href="realizacje.html">Wszystkie realizacje</a></div>
   <div class="strip stag" style="grid-template-columns:repeat(3,minmax(0,1fr))">{"".join(tile(o, "r-5-4", "(max-width: 860px) 50vw, 33vw") for o in others)}</div>
 </div></section>
 {LB}
@@ -282,12 +324,13 @@ oferta = f"""<div class="ph-head"><div class="wrap">
   <div class="g12"><h1 class="d-xl">Oferta</h1><p class="lead muted">Od jednej konsultacji po kompletny projekt z wizualizacjami i wsparciem przy realizacji. Każdą współpracę wyceniam indywidualnie.</p></div>
 </div></div>
 <div class="wrap">{svc}</div>
-<section class="proc" style="margin-top:96px"><div class="wrap">
-  <div class="head g12"><p class="lbl">Jak pracuję</p><h2 class="d-m rv">Pięć kroków od pierwszej rozmowy do gotowego wnętrza</h2></div>
+{wave_sec()}
+<section class="proc wtop soft" style="margin-top:56px"><div class="wrap">
+  <div class="head g12"><p class="lbl w">Jak pracuję</p><h2 class="d-m rv">Pięć kroków od pierwszej rozmowy do gotowego wnętrza</h2></div>
   <ol class="stag">{steps}</ol>
 </div></section>
 <section class="faq-w"><div class="wrap g12">
-  <div class="head"><p class="lbl muted">Pytania</p><h2 class="d-m rv" style="margin-top:16px">Najczęściej słyszę</h2></div>
+  <div class="head"><p class="lbl w muted">Pytania</p><h2 class="d-m rv" style="margin-top:16px">Najczęściej słyszę</h2></div>
   <div class="faq">{"".join(f"<details><summary>{q}</summary><p>{a}</p></details>" for q, a in FAQ)}</div>
 </div></section>
 {cta()}"""
@@ -300,53 +343,61 @@ omnie = f"""<div class="ph-head"><div class="wrap">
   <div class="g12"><h1 class="d-xl">Wioleta Siemieniuk</h1><p class="lead muted">Architektka wnętrz, założycielka Smuga Design.</p></div>
 </div></div>
 <section class="me"><div class="wrap g12">
-  <figure class="pic mask">{pic("smuga-wioleta", "r-5-4", "(max-width: 860px) 100vw, 40vw", True)}</figure>
+  <figure class="pic mask in">{pic("smuga-wioleta", "r-5-4", "(max-width: 860px) 100vw, 40vw", True)}</figure>
   <div class="txt stag">
-    <p class="lbl muted">Podejście</p>
+    <p class="lbl w muted">Podejście</p>
     <h2 class="d-m">Spokojna baza i jeden odważny gest.</h2>
     <p class="lead">Lubię naturalne materiały: drewno, kamień, len. Na nich buduję wnętrza, w których jest miejsce na kolor i sztukę.</p>
     <p class="muted">Projektuję od okna: gdzie pada światło, tam zaczyna się wnętrze. Tekst do uzupełnienia o wykształcenie, doświadczenie i publikacje.</p>
-    <div class="sig"><a href="{IG}" rel="noopener">Instagram @smuga_design</a><a href="{BEHANCE}" rel="noopener">Behance</a></div>
+    <div class="sig"><a href="{IG}" rel="noopener" style="display:inline-flex;gap:8px;align-items:center">{ICO["ig"]}@smuga_design</a><a class="btn" href="kontakt.html" data-modal>Umów rozmowę</a></div>
   </div>
 </div></section>
 <section class="sec"><div class="wrap">
-  <div class="mos-h"><h2 class="d-l rv">Z pracowni</h2><p class="lead muted">Detale z projektów, nad którymi pracowałam.</p></div>
-  <div class="mos stag">{mos}</div>
+  <div class="det-h"><div><p class="lbl w muted">Z pracowni</p><h2 class="d-l rv">Detale z moich projektów</h2></div><p class="lead muted">Materiały, kolory i formy, do których wracam.</p></div>
+  <div class="det stag">{det}</div>
 </div></section>
 {cta()}"""
 page("o-mnie.html", "O mnie · Wioleta Siemieniuk · Smuga Design", "Arch. wn. Wioleta Siemieniuk, Smuga Design. Ciepły minimalizm z odwagą koloru.", omnie, "o-mnie.html", og="smuga-wioleta")
 
 
 # KONTAKT (bez kwot)
-def opts(xs):
-    return "".join(f"<option>{x}</option>" for x in xs)
+def pills(name, items, req=False):
+    return "".join(f'<label><input type="radio" name="{name}" value="{t}"{" required" if req and i == 0 else ""}><span>{t}</span></label>' for i, t in enumerate(items))
 
 
-kontakt = f"""<div class="ph-head"><div class="wrap">
-  <p class="crumbs"><a href="index.html">Start</a><span>/</span><span>Kontakt</span></p>
-  <div class="g12"><h1 class="d-xl">Opisz swoje wnętrze</h1><p class="lead muted">Im więcej szczegółów, tym lepiej przygotuję się do pierwszej rozmowy.</p></div>
-</div></div>
-<section class="contact-body"><div class="wrap g12">
-  <div class="side">
-    <dl class="facts"><div><dt>E-mail</dt><dd><a href="mailto:{EMAIL}">{EMAIL}</a></dd></div><div><dt>Telefon</dt><dd><a href="tel:{PHONE_HREF}">{PHONE}</a></dd></div><div><dt>Instagram</dt><dd><a href="{IG}" rel="noopener">@smuga_design</a></dd></div><div><dt>Obszar</dt><dd>Białystok, Warszawa, zdalnie</dd></div></dl>
+kontakt = f"""<section class="kt">
+  <div class="kt-side">
     {mark()}
+    <p class="crumbs"><a href="index.html">Start</a><span>/</span><span>Kontakt</span></p>
+    <div><p class="lbl w">Kontakt</p><h1 class="d-l" style="margin-top:16px">Porozmawiajmy o Twoim wnętrzu</h1></div>
+    <div class="kt-list">
+      <a href="tel:{PHONE_HREF}"><span class="ic">{ICO["tel"]}</span><span><span class="lbl">Telefon</span><b>{PHONE}</b></span></a>
+      <a href="mailto:{EMAIL}"><span class="ic">{ICO["mail"]}</span><span><span class="lbl">E-mail</span><b>{EMAIL}</b></span></a>
+      <a href="{IG}" rel="noopener"><span class="ic">{ICO["ig"]}</span><span><span class="lbl">Instagram</span><b>@smuga_design</b></span></a>
+      <div><span class="ic">{ICO["pin"]}</span><span><span class="lbl">Obszar</span><b>Białystok, Warszawa, zdalnie</b></span></div>
+    </div>
+    <ol class="kt-steps small"><li>Odpowiadam na wiadomość i umawiamy rozmowę.</li><li>Rozmawiamy o wnętrzu, potrzebach i terminie.</li><li>Przygotowuję zakres i wycenę na piśmie.</li></ol>
   </div>
-  <form class="form" novalidate>
-    <label>Imię<input name="imie" autocomplete="given-name" required></label>
-    <label>E-mail<input type="email" name="email" autocomplete="email" required></label>
-    <label>Telefon<input type="tel" name="tel" autocomplete="tel"></label>
-    <label>Rodzaj wnętrza<select name="typ" required><option value="">Wybierz</option>{opts(["Mieszkanie", "Dom", "Wnętrze komercyjne", "Inne"])}</select></label>
-    <label>Lokalizacja<input name="miasto" placeholder="np. Białystok"></label>
-    <label>Metraż (m²)<input name="metraz" inputmode="numeric" placeholder="np. 65"></label>
-    <label>Zakres<select name="zakres"><option value="">Wybierz</option>{opts([n for _k, n, _d, _i in SERVICES] + ["Jeszcze nie wiem"])}</select></label>
-    <label>Kiedy chcesz zacząć<select name="termin"><option value="">Wybierz</option>{opts(["Jak najszybciej", "W ciągu 3 miesięcy", "Za 3-6 miesięcy", "Później"])}</select></label>
-    <label class="full">Wiadomość<textarea name="wiadomosc" placeholder="Co chcesz zmienić? Co lubisz, czego nie?"></textarea></label>
-    <label class="full">Rzut lub zdjęcia (opcjonalnie)<input type="file" name="pliki" multiple accept=".pdf,.jpg,.jpeg,.png"></label>
-    <label class="consent full"><input type="checkbox" required> Zgadzam się na kontakt w sprawie zapytania. Dane przetwarza Smuga Design zgodnie z polityką prywatności.</label>
-    <button class="btn" type="submit">Wyślij zapytanie</button>
-    <p class="form-ok" hidden tabindex="-1">To jest demo: formularz niczego nie wysyła. Na gotowej stronie wiadomość trafi na {EMAIL}.</p>
-  </form>
-</div></section>"""
+  <div class="kt-form">
+    <h2 class="d-l">Opisz swoje wnętrze</h2>
+    <p class="lead muted">Im więcej szczegółów, tym lepiej przygotuję się do pierwszej rozmowy.</p>
+    <form class="form" novalidate>
+      <label>Imię<input name="imie" autocomplete="given-name" required></label>
+      <label>E-mail<input type="email" name="email" autocomplete="email" required></label>
+      <label>Telefon<input type="tel" name="tel" autocomplete="tel"></label>
+      <label>Lokalizacja<input name="miasto" placeholder="np. Białystok"></label>
+      <fieldset class="full"><legend>Rodzaj wnętrza</legend><div class="pills">{pills("typ", ["Mieszkanie", "Dom", "Wnętrze komercyjne", "Inne"], True)}</div></fieldset>
+      <fieldset class="full"><legend>Zakres</legend><div class="pills">{pills("zakres", [n for _k, n, _d, _i in SERVICES] + ["Jeszcze nie wiem"])}</div></fieldset>
+      <label>Metraż (m²)<input name="metraz" inputmode="numeric" placeholder="np. 65"></label>
+      <fieldset><legend>Kiedy chcesz zacząć</legend><div class="pills">{pills("termin", ["Teraz", "Do 3 mies.", "Później"])}</div></fieldset>
+      <label class="full">Wiadomość<textarea name="wiadomosc" placeholder="Co chcesz zmienić? Co lubisz, czego nie?"></textarea></label>
+      <div class="full"><label class="drop"><input type="file" name="pliki" multiple accept=".pdf,.jpg,.jpeg,.png"><span class="ic">{ICO["up"]}</span><span><b>Dodaj rzut lub zdjęcia wnętrza</b><small>Przeciągnij pliki tutaj. PDF, JPG lub PNG.</small></span><span class="pick">Wybierz pliki</span></label><ul class="files"></ul></div>
+      <label class="consent full"><input type="checkbox" required> Zgadzam się na kontakt w sprawie zapytania. Dane przetwarza Smuga Design zgodnie z polityką prywatności.</label>
+      <div class="send full"><button class="btn" type="submit">Wyślij zapytanie</button><a class="lnk" href="tel:{PHONE_HREF}">albo zadzwoń: {PHONE}</a></div>
+      <p class="form-ok" hidden tabindex="-1">{mark()}To jest demo: formularz niczego nie wysyła. Na gotowej stronie wiadomość trafi na {EMAIL}.</p>
+    </form>
+  </div>
+</section>"""
 page("kontakt.html", "Kontakt · Smuga Design", "Zapytanie o projekt wnętrza: mieszkanie, dom, wnętrze komercyjne. Białystok, Warszawa, zdalnie.", kontakt, "kontakt.html")
 
 print("ok:", sorted(x.name for x in OUT.glob("*.html")))

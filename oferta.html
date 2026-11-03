@@ -15,10 +15,10 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..112,400..600&family=Hanken+Grotesk:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/style.css?v=4">
+<link rel="stylesheet" href="assets/style.css?v=5">
 </head>
 <body>
-<div class="loader" aria-hidden="true"><svg viewBox="0 0 120 64"><path d="M22 58C24 46 36 40 58 35C80 30 96 22 98 6"/></svg><div class="word"><span style="animation-delay:300ms">S</span><span style="animation-delay:340ms">M</span><span style="animation-delay:380ms">U</span><span style="animation-delay:420ms">G</span><span style="animation-delay:460ms">A</span><span style="animation-delay:500ms">&nbsp;</span><span style="animation-delay:540ms">D</span><span style="animation-delay:580ms">E</span><span style="animation-delay:620ms">S</span><span style="animation-delay:660ms">I</span><span style="animation-delay:700ms">G</span><span style="animation-delay:740ms">N</span></div><div class="bar"><i></i></div></div>
+<div class="loader" aria-hidden="true"><svg class="mk" viewBox="0 0 120 64"><path d="M22 58C24 46 36 40 58 35C80 30 96 22 98 6"/></svg><div class="word"><span style="animation-delay:500ms">S</span><span style="animation-delay:550ms">M</span><span style="animation-delay:600ms">U</span><span style="animation-delay:650ms">G</span><span style="animation-delay:700ms">A</span><span style="animation-delay:750ms">&nbsp;</span><span style="animation-delay:800ms">D</span><span style="animation-delay:850ms">E</span><span style="animation-delay:900ms">S</span><span style="animation-delay:950ms">I</span><span style="animation-delay:1000ms">G</span><span style="animation-delay:1050ms">N</span></div><div class="meta"><span>Projektowanie wnętrz</span><b>000</b></div></div>
 <a class="skip" href="#main">Przejdź do treści</a>
 <header class="hdr">
   <div class="wrap">
@@ -29,7 +29,9 @@
     <a class="logo" href="index.html" aria-label="Smuga Design, strona główna"><svg class="streak" viewBox="0 0 120 64" aria-hidden="true"><path d="M12 60C14 44 30 38 54 32C76 26 86 20 88 4H108C108 24 92 36 64 42C42 47 32 50 32 60Z"/></svg>SMUGA</a>
     <nav class="nav r" aria-label="Pracownia">
       <a href="o-mnie.html">O mnie</a>
-      <a class="cta-s" href="kontakt.html">Kontakt</a>
+      <a href="kontakt.html">Kontakt</a>
+      <a class="tel" href="tel:+48604762946" aria-label="Zadzwoń +48 604 762 946"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C10.6 21 3 13.4 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1z"/></svg><span>604 762 946</span></a>
+      <a class="cta-s" href="kontakt.html" data-modal>Umów rozmowę</a>
     </nav>
     <button class="burger" type="button" aria-expanded="false" aria-controls="drawer"><span>Menu</span><i aria-hidden="true"></i></button>
   </div>
@@ -48,35 +50,57 @@
   <div class="g12"><h1 class="d-xl">Oferta</h1><p class="lead muted">Od jednej konsultacji po kompletny projekt z wizualizacjami i wsparciem przy realizacji. Każdą współpracę wyceniam indywidualnie.</p></div>
 </div></div>
 <div class="wrap"><section class="svc" id="mieszkania"><span class="n">01</span><div class="t rv"><h2 class="d-l">Mieszkania</h2><p class="lead">Projekt, który porządkuje codzienność: gdzie stoi łóżko, jak pada światło, ile mieści szafa.</p></div><ul class="stag"><li>układ funkcjonalny i warianty</li><li>wizualizacje pomieszczeń</li><li>rysunki zabudów i elektryki</li><li>dobór materiałów i zestawienie</li></ul><div class="mask"><div class="ph r-4-5"><img src="img/viz-apartament-wwa-s.webp" srcset="img/viz-apartament-wwa-s.webp 800w, img/viz-apartament-wwa.webp 808w" sizes="(max-width: 860px) 100vw, 25vw" width="808" height="632" alt="Sypialnia z muralem i zabudową ze sklejki, mieszkanie w Warszawie" loading="lazy" decoding="async"></div></div></section><section class="svc" id="domy"><span class="n">02</span><div class="t rv"><h2 class="d-l">Domy</h2><p class="lead">Wnętrze domu projektowane razem z jego bryłą i ogrodem, najlepiej już na etapie budowy.</p></div><ul class="stag"><li>koncepcja dla całego domu</li><li>wizualizacje kluczowych stref</li><li>projekt wykonawczy dla ekip</li><li>wsparcie podczas realizacji</li></ul><div class="mask"><div class="ph r-4-5"><img src="img/viz-dom-001-s.webp" srcset="img/viz-dom-001-s.webp 800w, img/viz-dom-001.webp 808w" sizes="(max-width: 860px) 100vw, 25vw" width="808" height="632" alt="Kuchnia z wyspą i ryflowaną zabudową, dom jednorodzinny" loading="lazy" decoding="async"></div></div></section><section class="svc" id="komercyjne"><span class="n">03</span><div class="t rv"><h2 class="d-l">Wnętrza komercyjne</h2><p class="lead">Przestrzeń, która buduje markę i dobrze wygląda na zdjęciach klientów. Przykład: kawiarnia MNC Concept.</p></div><ul class="stag"><li>identyfikacja marki we wnętrzu</li><li>przepływ gości i obsługi</li><li>dobór trwałych materiałów</li><li>koordynacja z wykonawcami</li></ul><div class="mask"><div class="ph r-4-5"><img src="img/mnc-bar-s.webp" srcset="img/mnc-bar-s.webp 800w, img/mnc-bar.webp 1062w" sizes="(max-width: 860px) 100vw, 25vw" width="1062" height="1400" alt="Bar ze stali i kwiaty przy ekspresie, kawiarnia MNC Concept" loading="lazy" decoding="async"></div></div></section><section class="svc" id="wizualizacje"><span class="n">04</span><div class="t rv"><h2 class="d-l">Wizualizacje</h2><p class="lead">Realistyczne obrazy wnętrza, które pomagają podjąć decyzje, zanim zaczną się wydatki.</p></div><ul class="stag"><li>wizualizacje projektów własnych</li><li>warianty kolorów i materiałów</li><li>obrazy do sprzedaży nieruchomości</li></ul><div class="mask"><div class="ph r-4-5"><img src="img/viz-showroom-s.webp" srcset="img/viz-showroom-s.webp 800w, img/viz-showroom.webp 808w" sizes="(max-width: 860px) 100vw, 25vw" width="808" height="632" alt="Jasny showroom z łukami i drewnianą zabudową, showroom Spod igły i nitki" loading="lazy" decoding="async"></div></div></section><section class="svc" id="konsultacje"><span class="n">05</span><div class="t rv"><h2 class="d-l">Konsultacje</h2><p class="lead">Jedno spotkanie w Twoim wnętrzu i konkretny kierunek zmian do zrobienia samodzielnie.</p></div><ul class="stag"><li>kierunek kolorów i materiałów</li><li>lista zmian krok po kroku</li><li>spotkanie na miejscu albo online</li></ul><div class="mask"><div class="ph r-4-5"><img src="img/mnc-loza-s.webp" srcset="img/mnc-loza-s.webp 800w, img/mnc-loza.webp 1320w" sizes="(max-width: 860px) 100vw, 25vw" width="1320" height="1731" alt="Strefa siedzisk przy jasnej kotarze, kawiarnia MNC Concept" loading="lazy" decoding="async"></div></div></section></div>
-<section class="proc" style="margin-top:96px"><div class="wrap">
-  <div class="head g12"><p class="lbl">Jak pracuję</p><h2 class="d-m rv">Pięć kroków od pierwszej rozmowy do gotowego wnętrza</h2></div>
+<div class="wave-sec rv"><div class="wrap"><svg class="wave" viewBox="0 0 1440 48" preserveAspectRatio="none" aria-hidden="true"><path d="M0 44C360 44 480 4 720 24S1080 44 1440 4"/></svg></div></div>
+<section class="proc wtop soft" style="margin-top:56px"><div class="wrap">
+  <div class="head g12"><p class="lbl w">Jak pracuję</p><h2 class="d-m rv">Pięć kroków od pierwszej rozmowy do gotowego wnętrza</h2></div>
   <ol class="stag"><li><b>Rozmowa</b><p class="muted">Poznaję Ciebie, sposób życia i potrzeby. Ustalamy zakres i termin.</p></li><li><b>Pomiar</b><p class="muted">Mierzę wnętrze, robię zdjęcia, zbieram Twoje inspiracje.</p></li><li><b>Koncepcja</b><p class="muted">Układ funkcjonalny i wizualizacje, które dopracowujemy razem.</p></li><li><b>Projekt wykonawczy</b><p class="muted">Rysunki dla ekip, dobór materiałów i zestawienie.</p></li><li><b>Realizacja</b><p class="muted">Jestem przy wyborach na budowie, aż do sesji zdjęciowej.</p></li></ol>
 </div></section>
 <section class="faq-w"><div class="wrap g12">
-  <div class="head"><p class="lbl muted">Pytania</p><h2 class="d-m rv" style="margin-top:16px">Najczęściej słyszę</h2></div>
+  <div class="head"><p class="lbl w muted">Pytania</p><h2 class="d-m rv" style="margin-top:16px">Najczęściej słyszę</h2></div>
   <div class="faq"><details><summary>Od czego zaczynamy?</summary><p>Od rozmowy. Opowiadasz o wnętrzu i o tym, jak chcesz w nim żyć, a ja proponuję zakres i termin.</p></details><details><summary>Jak wyceniasz projekt?</summary><p>Indywidualnie, po rozmowie i obejrzeniu wnętrza. Wycena zależy od metrażu i zakresu, a dostajesz ją na piśmie przed startem.</p></details><details><summary>Ile trwa projekt?</summary><p>Koncepcja dla mieszkania to zwykle kilka tygodni, projekt kompleksowy kilka miesięcy. Termin ustalamy na starcie.</p></details><details><summary>Czy pracujesz zdalnie?</summary><p>Tak. Pomiar i spotkania mogą odbywać się online, a materiały wysyłam w formie cyfrowej.</p></details><details><summary>Co dostaję na koniec?</summary><p>Wizualizacje, rysunki wykonawcze dla ekip i listę materiałów, zależnie od zakresu. Przy realizacji jestem z Tobą do końca.</p></details></div>
 </div></section>
-<section class="cta" aria-labelledby="cta-h">
+<section class="cta wtop pink" aria-labelledby="cta-h">
   <div class="wrap">
-    <h2 class="d-xxl rv" id="cta-h">Porozmawiajmy</h2>
+    <div class="top"><h2 class="d-xxl rv" id="cta-h">Porozmawiajmy</h2><svg class="streak" viewBox="0 0 120 64" aria-hidden="true"><path d="M12 60C14 44 30 38 54 32C76 26 86 20 88 4H108C108 24 92 36 64 42C42 47 32 50 32 60Z"/></svg></div>
     <div class="row stag">
       <p class="lead">O mieszkaniu, domu albo lokalu. Pierwsza rozmowa niczego nie zobowiązuje, a po niej wiesz, jak mogłoby wyglądać Twoje wnętrze.</p>
-      <div class="links"><a href="mailto:kontakt@smugadesign.pl">kontakt@smugadesign.pl</a><a href="tel:+48604762946">+48 604 762 946</a></div>
-      <a class="btn" href="kontakt.html">Opisz swoje wnętrze</a>
+      <div class="links"><a href="tel:+48604762946"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C10.6 21 3 13.4 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1z"/></svg>+48 604 762 946</a><a href="mailto:kontakt@smugadesign.pl"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2zm0 4-8 5-8-5V6l8 5 8-5z"/></svg>kontakt@smugadesign.pl</a></div>
+      <a class="btn" href="kontakt.html" data-modal>Umów rozmowę</a>
     </div>
   </div>
 </section>
 </main>
 <footer class="ftr">
-  <div class="wrap g12">
-    <div class="mk"><svg class="streak" viewBox="0 0 120 64" aria-hidden="true"><path d="M12 60C14 44 30 38 54 32C76 26 86 20 88 4H108C108 24 92 36 64 42C42 47 32 50 32 60Z"/></svg></div>
-    <div class="col"><b>Smuga Design</b><span>Projektowanie wnętrz</span><span>arch. wn. Wioleta Siemieniuk</span></div>
-    <div class="col"><b>Kontakt</b><a href="tel:+48604762946">+48 604 762 946</a><a href="mailto:kontakt@smugadesign.pl">kontakt@smugadesign.pl</a></div>
-    <div class="col"><b>Social media</b><a href="https://www.instagram.com/smuga_design/" rel="noopener">@smuga_design</a><a href="https://www.behance.net/smugadesign" rel="noopener">Behance</a></div>
+  <div class="wrap">
+    <div class="top">
+      <div class="intro"><p class="d-s">Projektuję wnętrza, które zostawiają ślad. Białystok, Warszawa i zdalnie.</p><a class="btn light" href="kontakt.html" data-modal>Umów rozmowę</a></div>
+      <div class="col"><p class="lbl">Strona</p><a href="realizacje.html">Realizacje</a><a href="oferta.html">Oferta</a><a href="o-mnie.html">O mnie</a><a href="kontakt.html">Kontakt</a></div>
+      <div class="col"><p class="lbl">Oferta</p><a href="oferta.html#mieszkania">Mieszkania</a><a href="oferta.html#domy">Domy</a><a href="oferta.html#komercyjne">Wnętrza komercyjne</a><a href="oferta.html#wizualizacje">Wizualizacje</a><a href="oferta.html#konsultacje">Konsultacje</a></div>
+      <div class="col w3"><p class="lbl">Kontakt</p><a href="tel:+48604762946"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C10.6 21 3 13.4 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1z"/></svg>+48 604 762 946</a><a href="mailto:kontakt@smugadesign.pl"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2zm0 4-8 5-8-5V6l8 5 8-5z"/></svg>kontakt@smugadesign.pl</a><a href="https://www.instagram.com/smuga_design/" rel="noopener"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 7a5 5 0 1 0 0 10 5 5 0 0 0 0-10zm0 8a3 3 0 1 1 0-6 3 3 0 0 1 0 6zm5-9a1 1 0 1 0 0 2 1 1 0 0 0 0-2zM16 2H8a6 6 0 0 0-6 6v8a6 6 0 0 0 6 6h8a6 6 0 0 0 6-6V8a6 6 0 0 0-6-6zm4 14a4 4 0 0 1-4 4H8a4 4 0 0 1-4-4V8a4 4 0 0 1 4-4h8a4 4 0 0 1 4 4z"/></svg>@smuga_design</a><span style="display:inline-flex;gap:8px;align-items:center"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a7 7 0 0 0-7 7c0 5 7 13 7 13s7-8 7-13a7 7 0 0 0-7-7zm0 10a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"/></svg>Białystok</span></div>
+    </div>
     <p class="mark" aria-hidden="true">SMUGA DESIGN</p>
-    <div class="bottom"><span>© 2026 Smuga Design · Białystok</span><span><a href="realizacje.html">Realizacje</a> · <a href="oferta.html">Oferta</a> · <a href="o-mnie.html">O mnie</a> · <a href="kontakt.html">Kontakt</a></span><span>Demo projektu strony · Impact Agencja</span></div>
+    <div class="bottom"><span>© 2026 Smuga Design · arch. wn. Wioleta Siemieniuk</span><a href="https://www.behance.net/smugadesign" rel="noopener">Behance</a><span>Demo projektu strony · Impact Agencja</span></div>
   </div>
 </footer>
-<script src="assets/app.js?v=4" defer></script>
+<a class="fab" href="tel:+48604762946" aria-label="Zadzwoń +48 604 762 946"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C10.6 21 3 13.4 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1z"/></svg></a>
+<dialog class="dlg" aria-labelledby="dlg-h">
+  <button class="x" type="button" aria-label="Zamknij">&#10005;</button>
+  <div class="in">
+    <div class="l"><div><p class="lbl w">Umów rozmowę</p><h2 class="d-m" id="dlg-h" style="margin-top:16px">Porozmawiajmy o Twoim wnętrzu</h2></div><div style="display:grid;gap:8px;position:relative;z-index:1"><a href="tel:+48604762946"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C10.6 21 3 13.4 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1z"/></svg>+48 604 762 946</a><a href="mailto:kontakt@smugadesign.pl"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2zm0 4-8 5-8-5V6l8 5 8-5z"/></svg>kontakt@smugadesign.pl</a></div><svg class="streak" viewBox="0 0 120 64" aria-hidden="true"><path d="M12 60C14 44 30 38 54 32C76 26 86 20 88 4H108C108 24 92 36 64 42C42 47 32 50 32 60Z"/></svg></div>
+    <div class="r">
+      <p class="lead">Zostaw kontakt, oddzwonię i umówimy pierwszą rozmowę.</p>
+      <form class="form" novalidate>
+        <label>Imię<input name="imie" autocomplete="given-name" required></label>
+        <label>Telefon<input type="tel" name="tel" autocomplete="tel" required></label>
+        <fieldset class="full"><legend>Rodzaj wnętrza</legend><div class="pills"><label><input type="radio" name="typ" value="Mieszkanie" required><span>Mieszkanie</span></label><label><input type="radio" name="typ" value="Dom"><span>Dom</span></label><label><input type="radio" name="typ" value="Lokal"><span>Lokal</span></label></div></fieldset>
+        <label class="full">Krótko o wnętrzu<textarea name="wiadomosc" placeholder="np. mieszkanie 60 m², chcę zmienić kuchnię i salon"></textarea></label>
+        <label class="consent full"><input type="checkbox" required> Zgadzam się na kontakt w sprawie zapytania.</label>
+        <div class="send full"><button class="btn" type="submit">Wyślij</button></div>
+        <p class="form-ok" hidden tabindex="-1"><svg class="streak" viewBox="0 0 120 64" aria-hidden="true"><path d="M12 60C14 44 30 38 54 32C76 26 86 20 88 4H108C108 24 92 36 64 42C42 47 32 50 32 60Z"/></svg>To jest demo: formularz niczego nie wysyła.</p>
+      </form>
+    </div>
+  </div>
+</dialog>
+<script src="assets/app.js?v=5" defer></script>
 </body>
 </html>
