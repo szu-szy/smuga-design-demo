@@ -1,28 +1,31 @@
-// Smuga Design - demo: nagłówek, menu mobilne, pojawianie się sekcji, podgląd zdjęć, formularz.
+// Smuga Design - demo v2: nagłówek, szuflada menu, wejścia sekcji, podgląd zdjęć, formularz.
 document.documentElement.classList.add('js');
 
 const hdr = document.querySelector('.hdr');
-const onScroll = () => hdr.classList.toggle('is-scrolled', window.scrollY > 60);
+const onScroll = () => hdr.classList.toggle('is-scrolled', window.scrollY > 40);
 window.addEventListener('scroll', onScroll, { passive: true });
 onScroll();
 
 const burger = document.querySelector('.burger');
-const nav = document.querySelector('.nav');
+const drawer = document.querySelector('.drawer');
 const setMenu = (open) => {
-  nav.classList.toggle('is-open', open);
+  drawer.classList.toggle('is-open', open);
+  hdr.classList.toggle('menu-open', open);
   burger.setAttribute('aria-expanded', String(open));
   burger.querySelector('span').textContent = open ? 'Zamknij' : 'Menu';
   document.body.style.overflow = open ? 'hidden' : '';
 };
-burger.addEventListener('click', () => setMenu(!nav.classList.contains('is-open')));
-document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && nav.classList.contains('is-open')) { setMenu(false); burger.focus(); } });
+burger.addEventListener('click', () => setMenu(!drawer.classList.contains('is-open')));
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape' && drawer.classList.contains('is-open')) { setMenu(false); burger.focus(); }
+});
 
 const io = new IntersectionObserver((entries) => {
   entries.forEach((en) => { if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); } });
-}, { rootMargin: '0px 0px -10% 0px' });
-document.querySelectorAll('.rv').forEach((el) => io.observe(el));
+}, { rootMargin: '0px 0px -12% 0px' });
+document.querySelectorAll('.rv, .mask, .stag').forEach((el) => io.observe(el));
 
-// podgląd zdjęć: licznik, strzałki, Esc, przesuwanie palcem
+// podgląd zdjęć: licznik, strzałki, Esc, przesuwanie palcem, fokus w środku
 const lb = document.querySelector('.lb');
 if (lb) {
   const shots = [...document.querySelectorAll('[data-shot]')];
@@ -33,11 +36,10 @@ if (lb) {
   let opener = null;
   const show = (i) => {
     cur = (i + shots.length) % shots.length;
-    const s = shots[cur];
-    img.src = s.dataset.shot;
-    img.alt = s.dataset.alt;
-    count.textContent = `${cur + 1} / ${shots.length}`;
-    cap.textContent = s.dataset.alt;
+    img.src = shots[cur].dataset.shot;
+    img.alt = shots[cur].dataset.alt;
+    count.textContent = `${String(cur + 1).padStart(2, '0')} / ${String(shots.length).padStart(2, '0')}`;
+    cap.textContent = shots[cur].dataset.alt;
   };
   const open = (i, btn) => { opener = btn; show(i); lb.classList.add('is-open'); document.body.style.overflow = 'hidden'; lb.querySelector('.close').focus(); };
   const close = () => { lb.classList.remove('is-open'); document.body.style.overflow = ''; if (opener) opener.focus(); };
@@ -50,7 +52,7 @@ if (lb) {
     if (e.key === 'Escape') close();
     if (e.key === 'ArrowLeft') show(cur - 1);
     if (e.key === 'ArrowRight') show(cur + 1);
-    if (e.key === 'Tab') { // fokus zostaje w podglądzie
+    if (e.key === 'Tab') {
       const f = [...lb.querySelectorAll('button')].filter((b) => b.offsetParent);
       const i = f.indexOf(document.activeElement);
       e.preventDefault();
